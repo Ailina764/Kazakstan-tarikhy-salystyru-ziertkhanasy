@@ -1,0 +1,28 @@
+kind = "web"
+previewPath = "/"
+title = "Қазақстан тарихы — салыстыру зертханасы"
+description = "7-сынып оқушыларына арналған Қазақстан тарихы бойынша ЖИ жауабы мен оқулық мәтінін салыстыратын интерактивті оқу веб-қосымшасы."
+version = "1.0.0"
+id = "artifacts/history-comparison-lab"
+router = "path"
+
+[[services]]
+name = "web"
+paths = [ "/" ]
+localPort = 24735
+
+[services.development]
+run = "pnpm --filter @workspace/history-comparison-lab run dev"
+
+[services.production]
+build = [ "pnpm", "--filter", "@workspace/history-comparison-lab", "run", "build" ]
+serve = "static"
+publicDir = "artifacts/history-comparison-lab/dist/public"
+
+[[services.production.rewrites]]
+from = "/*"
+to = "/index.html"
+
+[services.env]
+PORT = "24735"
+BASE_PATH = "/"
