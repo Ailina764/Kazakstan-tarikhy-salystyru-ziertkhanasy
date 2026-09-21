@@ -126,19 +126,19 @@ function Landing({ onBegin }: { onBegin: () => void }) {
       <div className="flex-1 relative z-10 w-full flex flex-col lg:flex-row max-w-[1600px] mx-auto">
 
         {/* Left Side: Content */}
-        <div className="w-full lg:w-1/2 flex flex-col justify-start px-6 sm:px-12 lg:px-20 xl:px-24 py-4 lg:pt-10 xl:pt-14 order-1 text-center lg:text-left z-20 pb-6">
-          <div className="max-w-xl mx-auto lg:mx-0">
+        <div className="w-full lg:w-1/2 flex flex-col justify-start px-6 sm:px-12 lg:pl-20 lg:pr-4 xl:pl-24 xl:pr-6 py-4 lg:pt-6 xl:pt-10 order-1 text-center lg:text-left z-20 pb-6">
+          <div className="max-w-2xl mx-auto lg:mx-0">
              <span className="inline-block font-mono text-[10px] sm:text-xs uppercase tracking-[.3em] text-[#4A6D7C] mb-4 sm:mb-5 px-4 py-2 rounded-full border border-[#4A6D7C]/30 bg-[#4A6D7C]/5 backdrop-blur-sm">
                Зерттеу зертханасы
              </span>
              
-             <h1 className="font-serif text-5xl sm:text-6xl lg:text-6xl xl:text-7xl leading-[1.02] text-foreground mb-4 sm:mb-5">
+             <h1 className="font-display font-semibold uppercase text-5xl sm:text-6xl lg:text-6xl xl:text-7xl leading-[0.92] tracking-[0.015em] text-foreground mb-5">
                Шындық пен <br />
-               <span className="italic text-[#4A6D7C]">ЖИ</span>
+               <span className="text-[#4A6D7C]">ЖИ</span>
              </h1>
              
-             <p className="font-sans text-base sm:text-lg lg:text-lg xl:text-xl leading-relaxed text-muted-foreground mb-6 sm:mb-7 border-l-0 lg:border-l-2 border-[#4A6D7C]/30 lg:pl-6">
-               Қазақстан тарихын екі дереккөз арқылы зертте. ЖИ түсіндірмесі мен оқулық дерегін қатар қой. Ұқсастықты тап, айырмашылықты байқа.
+             <p className="font-sans text-base sm:text-lg lg:text-base xl:text-lg leading-relaxed text-muted-foreground mb-6 border-l-0 lg:border-l-2 border-[#4A6D7C]/30 lg:pl-6">
+               Қазақстан тарихын екі дереккөз арқылы тереңірек зертте. ЖИ ұсынған түсіндірмені оқулықтағы нақты деректермен салыстыр. Оқиғалардың себептері мен салдарын талдап, ұқсастықтарды анықта, айырмашылықтарды байқап, өз қорытындыңды жаса.
              </p>
              
              <div className="flex flex-col sm:flex-row items-center gap-6 justify-center lg:justify-start">
