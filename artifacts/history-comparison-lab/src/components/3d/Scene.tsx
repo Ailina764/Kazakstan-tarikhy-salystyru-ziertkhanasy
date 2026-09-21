@@ -49,7 +49,7 @@ export function Scene({ id, className, webglClassName, fallbackClassName, isAi, 
         <ErrorBoundary onError={() => setStatus('error')}>
           <Suspense fallback={null}>
             <div className={`absolute inset-0 transition-opacity duration-700 ${status === 'active' ? 'opacity-100' : 'opacity-0 pointer-events-none'}`}>
-              <R3fScene isAi={isAi} topicId={topicId} onReady={() => setStatus('active')} />
+              <R3fScene sceneId={id} isAi={isAi} topicId={topicId} onReady={() => setStatus('active')} />
             </div>
           </Suspense>
         </ErrorBoundary>
