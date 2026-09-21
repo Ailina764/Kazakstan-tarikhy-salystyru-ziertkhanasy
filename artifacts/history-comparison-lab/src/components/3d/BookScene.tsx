@@ -94,7 +94,7 @@ export default function BookScene({ onReady, onError }: BookSceneProps) {
         books.position.sub(center);
 
         const modelRoot = new THREE.Group();
-        const scale = 1.75 / Math.max(size.x, size.y, size.z);
+        const scale = 1.15 / Math.max(size.x, size.y, size.z);
         modelRoot.scale.setScalar(scale);
         books.rotation.y = -0.18;
 
