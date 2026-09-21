@@ -4,6 +4,7 @@ import { ErrorBoundary } from './ErrorBoundary';
 const R3fScene = React.lazy(() => import('./R3fScene'));
 const RobotScene = React.lazy(() => import('./RobotScene'));
 const BookScene = React.lazy(() => import('./BookScene'));
+const HistoricalCharacterScene = React.lazy(() => import('./HistoricalCharacterScene'));
 
 interface SceneProps {
   id: string;
@@ -25,6 +26,11 @@ export function Scene({ id, className, webglClassName, isAi, topicId }: ScenePro
               {isAi ? (
                 <RobotScene
                   placement={id === 'landing-ai' ? 'landing' : 'panel'}
+                  onReady={() => setStatus('active')}
+                  onError={() => setStatus('error')}
+                />
+              ) : id === 'questions-placeholder' && topicId === 'tauke-khan' ? (
+                <HistoricalCharacterScene
                   onReady={() => setStatus('active')}
                   onError={() => setStatus('error')}
                 />
