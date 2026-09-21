@@ -3,7 +3,7 @@ import * as THREE from 'three';
 import { GLTFLoader } from 'three/examples/jsm/loaders/GLTFLoader.js';
 import { MeshoptDecoder } from 'three/examples/jsm/libs/meshopt_decoder.module.js';
 
-const ROBOT_MODEL_URL = '/assets/models/robot-nexbot.glb';
+const ROBOT_MODEL_URL = '/assets/models/mini-robot.glb';
 
 interface RobotSceneProps {
   placement: 'landing' | 'panel';
@@ -60,20 +60,20 @@ export default function RobotScene({ placement, onReady, onError }: RobotScenePr
     renderer.setPixelRatio(Math.min(window.devicePixelRatio, 1.5));
     renderer.outputColorSpace = THREE.SRGBColorSpace;
     renderer.toneMapping = THREE.ACESFilmicToneMapping;
-    renderer.toneMappingExposure = 1.15;
+    renderer.toneMappingExposure = 0.95;
     container.appendChild(renderer.domElement);
 
-    scene.add(new THREE.HemisphereLight(0xdff7ff, 0x35261e, 2.1));
+    scene.add(new THREE.HemisphereLight(0xffffff, 0x54473f, 1.35));
 
-    const keyLight = new THREE.DirectionalLight(0xe4f8ff, 4.4);
+    const keyLight = new THREE.DirectionalLight(0xffffff, 2.2);
     keyLight.position.set(3, 5, 5);
     scene.add(keyLight);
 
-    const rimLight = new THREE.PointLight(0x4a9db8, 7, 10);
+    const rimLight = new THREE.PointLight(0xffffff, 2.5, 10);
     rimLight.position.set(-3, 1, 3);
     scene.add(rimLight);
 
-    const warmLight = new THREE.PointLight(0xcfa052, 4, 9);
+    const warmLight = new THREE.PointLight(0xffd8b5, 1.4, 9);
     warmLight.position.set(3, -2, 2);
     scene.add(warmLight);
 
@@ -95,27 +95,15 @@ export default function RobotScene({ placement, onReady, onError }: RobotScenePr
         const center = bounds.getCenter(new THREE.Vector3());
         robot.position.sub(center);
 
-        const targetSize = placement === 'landing' ? 2.9 : 2.85;
+        const targetSize = placement === 'landing' ? 3.05 : 2.85;
         const scale = targetSize / Math.max(size.x, size.y, size.z);
         robot.scale.setScalar(scale);
-        robot.rotation.y = placement === 'landing' ? 0.1 : 0.04;
+        robot.rotation.y = Math.PI + (placement === 'landing' ? 0.1 : 0.04);
 
         robot.traverse((child) => {
           if (child instanceof THREE.Mesh) {
             child.castShadow = true;
             child.receiveShadow = true;
-            child.geometry.computeBoundingBox();
-            const partSize = child.geometry.boundingBox?.getSize(new THREE.Vector3()) ?? new THREE.Vector3(1, 1, 1);
-            const isJoint = Math.max(partSize.x, partSize.y, partSize.z) < 0.24;
-            const isHead = child.name.toLowerCase().includes('head');
-            const material = new THREE.MeshStandardMaterial({
-              color: isHead ? 0x182a33 : isJoint ? 0xcfa052 : 0x4a6d7c,
-              metalness: isJoint ? 0.82 : 0.68,
-              roughness: isJoint ? 0.3 : 0.38,
-              emissive: isHead ? 0x07171e : 0x000000,
-              emissiveIntensity: isHead ? 0.32 : 0,
-            });
-            child.material = material;
           }
         });
 

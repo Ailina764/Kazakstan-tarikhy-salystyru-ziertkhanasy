@@ -3,12 +3,10 @@ import React, { useState, useEffect, useRef } from 'react';
 function RobotFallback() {
   return (
     <div className="relative w-full h-full flex items-center justify-center">
-      <div className="absolute inset-[12%] rounded-full bg-[#6FA8BA]/15 blur-3xl motion-safe:animate-pulse-slow" />
-      <div className="absolute inset-[8%] rounded-full border border-[#6F9BAE]/25 border-dashed motion-safe:animate-[spin_28s_linear_infinite]" />
       <img
-        src="/assets/models/robot-nexbot-render.png"
+        src="/assets/models/mini-robot-render.png"
         alt=""
-        className="relative z-10 w-full h-full object-contain drop-shadow-[0_24px_30px_rgba(38,59,69,0.28)]"
+        className="relative z-10 w-full h-full object-contain"
         draggable={false}
       />
     </div>
@@ -251,14 +249,16 @@ export function FallbackModel({ isAi, topicId, placement = 'panel' }: { isAi?: b
       <div
         className={`relative flex items-center justify-center motion-safe:animate-float-gently ${
           isAi && placement === 'landing'
-            ? 'w-56 h-[22rem] lg:w-[30rem] lg:h-[38rem] -translate-y-[3%]'
+            ? 'w-64 h-[24rem] lg:w-[34rem] lg:h-[42rem] -translate-y-[2%]'
             : 'w-64 h-72 lg:w-96 lg:h-[28rem]'
         }`}
         style={transformStyle}
       >
         <SvgComponent />
       </div>
-      <div className="absolute bottom-[10%] lg:bottom-1/4 w-48 h-6 bg-black/15 dark:bg-black/50 blur-2xl rounded-full motion-safe:animate-pulse-slow" />
+      {!isAi && (
+        <div className="absolute bottom-[10%] lg:bottom-1/4 w-48 h-6 bg-black/15 dark:bg-black/50 blur-2xl rounded-full motion-safe:animate-pulse-slow" />
+      )}
     </div>
   );
 }

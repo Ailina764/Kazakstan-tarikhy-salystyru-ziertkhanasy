@@ -119,9 +119,8 @@ function SectionKicker({ children }: { children: ReactNode }) {
 function Landing({ onBegin }: { onBegin: () => void }) {
   return (
     <motion.div variants={pageVariants} initial="initial" animate="animate" exit="exit" className="relative min-h-[100dvh] flex flex-col pt-[89px]">
-      {/* Cinematic Background */}
+      {/* Uniform page background — the robot has no separate backdrop. */}
       <div className="absolute inset-0 z-0 bg-background overflow-hidden pointer-events-none">
-        <div className="absolute top-0 right-0 w-full lg:w-1/2 h-full bg-gradient-to-bl from-[#4A6D7C]/15 to-transparent" />
       </div>
 
       <div className="flex-1 relative z-10 w-full flex flex-col lg:flex-row max-w-[1600px] mx-auto">
@@ -151,7 +150,7 @@ function Landing({ onBegin }: { onBegin: () => void }) {
         </div>
 
         {/* Right Side: Robot */}
-        <div className="w-full lg:w-1/2 h-[38vh] min-h-[280px] lg:h-[calc(100vh-89px)] relative group order-2 pb-4 lg:pb-0">
+        <div className="w-full lg:w-1/2 h-[42vh] min-h-[320px] lg:h-[calc(100vh-89px)] relative group order-2 pb-4 lg:pb-0">
           <Scene 
             id="landing-ai"
             isAi={true} 
