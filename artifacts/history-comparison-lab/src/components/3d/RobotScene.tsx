@@ -104,6 +104,18 @@ export default function RobotScene({ placement, onReady, onError }: RobotScenePr
           if (child instanceof THREE.Mesh) {
             child.castShadow = true;
             child.receiveShadow = true;
+            child.geometry.computeBoundingBox();
+            const partSize = child.geometry.boundingBox?.getSize(new THREE.Vector3()) ?? new THREE.Vector3(1, 1, 1);
+            const isJoint = Math.max(partSize.x, partSize.y, partSize.z) < 0.24;
+            const isHead = child.name.toLowerCase().includes('head');
+            const material = new THREE.MeshStandardMaterial({
+              color: isHead ? 0x182a33 : isJoint ? 0xcfa052 : 0x4a6d7c,
+              metalness: isJoint ? 0.82 : 0.68,
+              roughness: isJoint ? 0.3 : 0.38,
+              emissive: isHead ? 0x07171e : 0x000000,
+              emissiveIntensity: isHead ? 0.32 : 0,
+            });
+            child.material = material;
           }
         });
 

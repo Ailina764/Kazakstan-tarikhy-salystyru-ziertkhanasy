@@ -121,24 +121,13 @@ function Landing({ onBegin }: { onBegin: () => void }) {
     <motion.div variants={pageVariants} initial="initial" animate="animate" exit="exit" className="relative min-h-[100dvh] flex flex-col pt-[89px]">
       {/* Cinematic Background */}
       <div className="absolute inset-0 z-0 bg-background overflow-hidden pointer-events-none">
-        <div className="absolute top-0 left-0 w-full lg:w-1/2 h-full bg-gradient-to-br from-[#4A6D7C]/15 to-transparent" />
+        <div className="absolute top-0 right-0 w-full lg:w-1/2 h-full bg-gradient-to-bl from-[#4A6D7C]/15 to-transparent" />
       </div>
 
       <div className="flex-1 relative z-10 w-full flex flex-col lg:flex-row max-w-[1600px] mx-auto">
-        
-        {/* Left Side: Robot */}
-        <div className="w-full lg:w-1/2 h-[38vh] min-h-[280px] lg:h-[calc(100vh-89px)] relative group order-1 pb-4 lg:pb-0">
-          <Scene 
-            id="landing-ai"
-            isAi={true} 
-            autoActivate
-            webglClassName="opacity-100 transition-opacity duration-1000" 
-            fallbackClassName="opacity-100 transition-transform duration-1000 group-hover:scale-105"
-          />
-        </div>
 
-        {/* Right Side: Content */}
-        <div className="w-full lg:w-1/2 flex flex-col justify-start px-6 sm:px-12 lg:px-20 xl:px-24 py-4 lg:pt-10 xl:pt-14 order-2 text-center lg:text-left z-20 pb-6 lg:pb-32">
+        {/* Left Side: Content */}
+        <div className="w-full lg:w-1/2 flex flex-col justify-start px-6 sm:px-12 lg:px-20 xl:px-24 py-4 lg:pt-10 xl:pt-14 order-1 text-center lg:text-left z-20 pb-6 lg:pb-32">
           <div className="max-w-xl mx-auto lg:mx-0">
              <span className="inline-block font-mono text-[10px] sm:text-xs uppercase tracking-[.3em] text-[#4A6D7C] mb-4 sm:mb-5 px-4 py-2 rounded-full border border-[#4A6D7C]/30 bg-[#4A6D7C]/5 backdrop-blur-sm">
                Зерттеу зертханасы
@@ -159,6 +148,17 @@ function Landing({ onBegin }: { onBegin: () => void }) {
                </PrimaryButton>
              </div>
           </div>
+        </div>
+
+        {/* Right Side: Robot */}
+        <div className="w-full lg:w-1/2 h-[38vh] min-h-[280px] lg:h-[calc(100vh-89px)] relative group order-2 pb-4 lg:pb-0">
+          <Scene 
+            id="landing-ai"
+            isAi={true} 
+            autoActivate
+            webglClassName="opacity-100 transition-opacity duration-1000" 
+            fallbackClassName="opacity-100 transition-transform duration-1000 group-hover:scale-105"
+          />
         </div>
 
       </div>
