@@ -365,10 +365,20 @@ function SourceAnswer({ item, source, onNext, onBack }: { item: ComparisonData; 
           </div>
           
           {/* 3D Context visualization on the side */}
-          <div className={`${isAi ? 'block h-[360px] mt-4' : 'hidden'} lg:block lg:h-full lg:mt-0 relative border border-border rounded-3xl overflow-hidden glass-panel`}>
+          <div
+            className={`${
+              isAi
+                ? 'block h-[360px] mt-4 border-0 bg-transparent'
+                : 'hidden border border-border glass-panel'
+            } lg:block lg:h-full lg:mt-0 relative rounded-3xl overflow-hidden`}
+          >
              <Scene id="source-answer-scene" isAi={isAi} topicId={item.topicId} autoActivate={isAi} />
             <div className="absolute top-8 left-8 right-8 z-10 flex items-center justify-between">
-               <span className="font-mono text-[10px] uppercase tracking-widest text-muted-foreground bg-background/50 backdrop-blur-md px-3 py-1 border border-border rounded-sm">
+               <span
+                 className={`font-mono text-[10px] uppercase tracking-widest text-muted-foreground px-3 py-1 rounded-sm ${
+                   isAi ? 'bg-transparent border-0' : 'bg-background/50 backdrop-blur-md border border-border'
+                 }`}
+               >
                  {isAi ? 'ЖИ Моделі' : 'Тарихи Артефакт'}
                </span>
             </div>
