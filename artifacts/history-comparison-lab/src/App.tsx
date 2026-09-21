@@ -39,7 +39,7 @@ function LandingOrnament() {
 
   return (
     <div className="absolute inset-0 z-0 flex items-center justify-center overflow-hidden pointer-events-none" aria-hidden="true">
-      <div className="relative w-[92%] max-w-[680px] aspect-square translate-x-[16%]">
+      <div className="relative w-[92%] max-w-[680px] aspect-square translate-x-[14%]">
         <div className="absolute inset-[8%] rounded-full bg-[#4A6D7C]/[0.035] blur-2xl" />
         <svg
           viewBox="0 0 400 400"

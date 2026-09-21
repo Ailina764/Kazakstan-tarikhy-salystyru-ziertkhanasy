@@ -78,7 +78,7 @@ export default function RobotScene({ placement, onReady, onError }: RobotScenePr
     scene.add(warmLight);
 
     const baseX = 0;
-    const baseY = placement === 'landing' ? 0.12 : 0.05;
+    const baseY = placement === 'landing' ? 0.24 : 0.05;
     const robotGroup = new THREE.Group();
     robotGroup.position.set(baseX, baseY, 0);
     scene.add(robotGroup);
