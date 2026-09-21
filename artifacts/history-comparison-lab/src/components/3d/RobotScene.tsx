@@ -96,7 +96,7 @@ export default function RobotScene({ placement, onReady, onError }: RobotScenePr
         const center = bounds.getCenter(new THREE.Vector3());
         robot.position.sub(center);
 
-        const targetSize = placement === 'landing' ? 2.55 : 2;
+        const targetSize = 2;
         const scale = targetSize / Math.max(size.x, size.y, size.z);
         robot.scale.setScalar(scale);
         robot.rotation.y = placement === 'landing' ? 0.08 : 0.03;
