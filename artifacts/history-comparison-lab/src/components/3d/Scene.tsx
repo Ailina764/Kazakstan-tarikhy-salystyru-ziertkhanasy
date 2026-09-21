@@ -1,9 +1,10 @@
-import React, { useState, useEffect, Suspense } from 'react';
+import React, { useState, useEffect, useRef, Suspense } from 'react';
 import { FallbackModel } from './FallbackModel';
 import { Box, Layers, Loader2, AlertCircle } from 'lucide-react';
 import { ErrorBoundary } from './ErrorBoundary';
 
 const R3fScene = React.lazy(() => import('./R3fScene'));
+const RobotScene = React.lazy(() => import('./RobotScene'));
 
 interface SceneProps {
   id: string;
@@ -12,10 +13,12 @@ interface SceneProps {
   fallbackClassName?: string;
   isAi?: boolean;
   topicId?: string;
+  autoActivate?: boolean;
 }
 
-export function Scene({ id, className, webglClassName, fallbackClassName, isAi, topicId }: SceneProps) {
+export function Scene({ id, className, webglClassName, fallbackClassName, isAi, topicId, autoActivate = false }: SceneProps) {
   const [status, setStatus] = useState<'fallback' | 'loading' | 'active' | 'error'>('fallback');
+  const autoActivationStarted = useRef(false);
 
   useEffect(() => {
     const handleActivate = (e: CustomEvent) => {
@@ -36,12 +39,24 @@ export function Scene({ id, className, webglClassName, fallbackClassName, isAi, 
     setStatus('fallback');
   };
 
+  useEffect(() => {
+    if (!autoActivate || autoActivationStarted.current) return;
+    autoActivationStarted.current = true;
+
+    const timer = window.setTimeout(() => {
+      window.dispatchEvent(new CustomEvent('activate-3d', { detail: id }));
+      setStatus('loading');
+    }, 250);
+
+    return () => window.clearTimeout(timer);
+  }, [autoActivate, id]);
+
   return (
     <div className={`relative w-full h-full flex items-center justify-center overflow-hidden ${className || ''} ${status === 'active' ? webglClassName || '' : fallbackClassName || ''}`}>
       
       {/* Always render Fallback if not fully active, or underneath while loading */}
       {status !== 'active' && (
-        <FallbackModel isAi={isAi} topicId={topicId} />
+        <FallbackModel isAi={isAi} topicId={topicId} placement={id === 'landing-ai' ? 'landing' : 'panel'} />
       )}
 
       {/* WebGL Chunk */}
@@ -49,7 +64,15 @@ export function Scene({ id, className, webglClassName, fallbackClassName, isAi, 
         <ErrorBoundary onError={() => setStatus('error')}>
           <Suspense fallback={null}>
             <div className={`absolute inset-0 transition-opacity duration-700 ${status === 'active' ? 'opacity-100' : 'opacity-0 pointer-events-none'}`}>
-              <R3fScene sceneId={id} isAi={isAi} topicId={topicId} onReady={() => setStatus('active')} />
+              {isAi ? (
+                <RobotScene
+                  placement={id === 'landing-ai' ? 'landing' : 'panel'}
+                  onReady={() => setStatus('active')}
+                  onError={() => setStatus('error')}
+                />
+              ) : (
+                <R3fScene sceneId={id} topicId={topicId} onReady={() => setStatus('active')} />
+              )}
             </div>
           </Suspense>
         </ErrorBoundary>
@@ -81,7 +104,7 @@ export function Scene({ id, className, webglClassName, fallbackClassName, isAi, 
           </button>
         )}
         
-        {status === 'error' && (
+        {status === 'error' && !autoActivate && (
           <div className="flex items-center gap-2 bg-destructive/10 backdrop-blur-xl border border-destructive/30 px-4 py-2 rounded-full text-[10px] sm:text-xs font-mono uppercase tracking-widest text-destructive shadow-lg">
             <AlertCircle size={14} /> 3D Қолжетімсіз
           </div>

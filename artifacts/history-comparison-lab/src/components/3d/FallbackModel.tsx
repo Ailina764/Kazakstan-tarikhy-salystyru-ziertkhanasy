@@ -1,28 +1,72 @@
 import React, { useState, useEffect, useRef } from 'react';
 
-function OrbFallback() {
+function RobotFallback() {
   return (
-    <svg viewBox="0 0 100 100" className="w-full h-full" style={{ filter: 'drop-shadow(0 0 30px rgba(74, 109, 124, 0.6))' }}>
-      <circle cx="50" cy="50" r="42" fill="url(#ai-glow)" opacity="0.3" className="animate-pulse-slow" />
-      <circle cx="50" cy="50" r="38" fill="none" stroke="#6893A6" strokeWidth="1" strokeDasharray="8 4 2 4" style={{ animation: 'spin-slow 25s linear infinite' }} />
-      <circle cx="50" cy="50" r="32" fill="none" stroke="#2B4653" strokeWidth="1.5" strokeDasharray="12 12" style={{ animation: 'spin-slow 15s linear reverse infinite' }} />
-      <circle cx="50" cy="50" r="26" fill="#4A6D7C" opacity="0.2" stroke="#8BB8CD" strokeWidth="0.5" />
-      
-      {/* Inner core */}
-      <circle cx="50" cy="50" r="14" fill="#8BB8CD" opacity="0.9" style={{ filter: 'drop-shadow(0 0 12px #8BB8CD)' }} />
-      <circle cx="50" cy="50" r="10" fill="#FFFFFF" opacity="0.8" />
-      <circle cx="50" cy="50" r="5" fill="#FFFFFF" />
-      
-      {/* Decorative tech lines */}
-      <path d="M50 5 L50 12 M50 88 L50 95 M5 50 L12 50 M88 50 L95 50" stroke="#6893A6" strokeWidth="1" opacity="0.5" />
-      <path d="M20 20 L25 25 M80 80 L75 75 M20 80 L25 75 M80 20 L75 25" stroke="#4A6D7C" strokeWidth="1" opacity="0.5" />
-
+    <svg viewBox="0 0 120 140" className="w-full h-full" style={{ filter: 'drop-shadow(0 22px 28px rgba(27, 51, 63, 0.34))' }}>
       <defs>
-        <radialGradient id="ai-glow" cx="50%" cy="50%" r="50%">
-          <stop offset="0%" stopColor="#8BB8CD" stopOpacity="1" />
-          <stop offset="100%" stopColor="#4A6D7C" stopOpacity="0" />
+        <linearGradient id="robot-shell" x1="15%" y1="5%" x2="85%" y2="95%">
+          <stop offset="0%" stopColor="#E9F2F2" />
+          <stop offset="38%" stopColor="#8BA2A9" />
+          <stop offset="72%" stopColor="#455E69" />
+          <stop offset="100%" stopColor="#233640" />
+        </linearGradient>
+        <linearGradient id="robot-face" x1="25%" y1="10%" x2="75%" y2="100%">
+          <stop offset="0%" stopColor="#617985" />
+          <stop offset="55%" stopColor="#2A414C" />
+          <stop offset="100%" stopColor="#14262F" />
+        </linearGradient>
+        <linearGradient id="robot-gold" x1="0%" y1="0%" x2="100%" y2="100%">
+          <stop offset="0%" stopColor="#F1D287" />
+          <stop offset="55%" stopColor="#C69743" />
+          <stop offset="100%" stopColor="#7A5525" />
+        </linearGradient>
+        <radialGradient id="robot-eye">
+          <stop offset="0%" stopColor="#FFFFFF" />
+          <stop offset="32%" stopColor="#A8EEFF" />
+          <stop offset="100%" stopColor="#2B8EAA" />
         </radialGradient>
       </defs>
+
+      {/* Interface halo */}
+      <circle cx="60" cy="67" r="52" fill="none" stroke="#6F9BAE" strokeWidth="0.8" strokeDasharray="3 6" opacity="0.45" style={{ animation: 'spin-slow 32s linear infinite' }} />
+      <circle cx="60" cy="67" r="45" fill="#5F899A" opacity="0.08" />
+      <path d="M60 7v8M60 119v8M4 67h9M107 67h9" stroke="#6F9BAE" strokeWidth="1.5" opacity="0.65" />
+
+      {/* Shoulders and neck */}
+      <path d="M20 137c4-18 18-28 32-31h17c15 3 27 13 31 31z" fill="#273D47" />
+      <path d="M48 95h25l-3 19H51z" fill="url(#robot-shell)" stroke="#B7CDD2" strokeWidth="0.8" />
+      <path d="M52 105h17l-2 10H54z" fill="#172A33" />
+
+      {/* Main cranial shell */}
+      <path d="M27 56C28 25 44 13 65 14c24 1 34 17 33 43l-3 34-18 17H48L29 92z" fill="url(#robot-shell)" stroke="#D5E4E6" strokeWidth="1.2" />
+      <path d="M33 48c5-20 17-28 33-27 12 1 21 6 27 17L76 33H51z" fill="#DCE8E8" opacity="0.78" />
+
+      {/* Temple mechanisms */}
+      <path d="M27 58l10-8 5 15-5 27-8-3z" fill="#263E49" stroke="#8DA7AF" strokeWidth="0.8" />
+      <path d="M98 57l-9-7-5 15 4 28 7-3z" fill="#1C333E" stroke="#77929C" strokeWidth="0.8" />
+      <circle cx="34" cy="70" r="5" fill="url(#robot-gold)" />
+      <circle cx="91" cy="70" r="5" fill="url(#robot-gold)" />
+
+      {/* Face plate */}
+      <path d="M42 48l12-9h20l13 10-3 39-13 13H53L40 88z" fill="url(#robot-face)" stroke="#9DB7BF" strokeWidth="1" />
+      <path d="M43 55l13-7h16l13 7-5 14H48z" fill="#192E38" />
+
+      {/* Eyes */}
+      <path d="M47 59l12-4 2 8-13 2z" fill="url(#robot-eye)" style={{ filter: 'drop-shadow(0 0 5px #76DDF6)' }} />
+      <path d="M78 59l-12-4-2 8 13 2z" fill="url(#robot-eye)" style={{ filter: 'drop-shadow(0 0 5px #76DDF6)' }} />
+      <path d="M61 48h4l3 28-6 6-5-6z" fill="#75909A" opacity="0.85" />
+
+      {/* Lower mask */}
+      <path d="M45 75l14 9h8l15-9-2 14-12 9H55l-11-9z" fill="#203740" />
+      <path d="M52 87h23" stroke="#B7D2D7" strokeWidth="1.2" opacity="0.7" />
+      <path d="M55 92h17" stroke="#C69743" strokeWidth="1.5" opacity="0.85" />
+
+      {/* Kazakh-inspired forehead accent */}
+      <path d="M55 28l8-6 8 6-8 10z" fill="url(#robot-gold)" />
+      <path d="M58 28l5-3 5 3-5 6z" fill="#314E5A" />
+
+      {/* Panel lines */}
+      <path d="M39 40l10 4M87 41l-10 4M35 99l13-7M90 99l-12-7" stroke="#C4D7DA" strokeWidth="0.8" opacity="0.7" />
     </svg>
   );
 }
@@ -213,7 +257,7 @@ function DombraFallback() {
   );
 }
 
-export function FallbackModel({ isAi, topicId }: { isAi?: boolean, topicId?: string }) {
+export function FallbackModel({ isAi, topicId, placement = 'panel' }: { isAi?: boolean, topicId?: string, placement?: 'landing' | 'panel' }) {
   const [mouse, setMouse] = useState({ x: 0, y: 0 });
   const containerRef = useRef<HTMLDivElement>(null);
 
@@ -247,7 +291,7 @@ export function FallbackModel({ isAi, topicId }: { isAi?: boolean, topicId?: str
 
   let SvgComponent = ScrollFallback;
   if (isAi) {
-    SvgComponent = OrbFallback;
+    SvgComponent = RobotFallback;
   } else {
     switch (topicId) {
       case 'tauke-khan': SvgComponent = ScrollFallback; break;
@@ -260,8 +304,12 @@ export function FallbackModel({ isAi, topicId }: { isAi?: boolean, topicId?: str
 
   return (
     <div ref={containerRef} className="w-full h-full flex items-center justify-center relative pointer-events-none">
-      <div 
-        className="relative w-64 h-64 lg:w-96 lg:h-96 flex items-center justify-center motion-safe:animate-float-gently" 
+      <div
+        className={`relative flex items-center justify-center motion-safe:animate-float-gently ${
+          isAi && placement === 'landing'
+            ? 'w-44 h-52 translate-x-[32%] translate-y-[52%] lg:w-64 lg:h-72 lg:translate-x-[80%] lg:-translate-y-[80%]'
+            : 'w-64 h-72 lg:w-96 lg:h-[28rem]'
+        }`}
         style={transformStyle}
       >
         <SvgComponent />

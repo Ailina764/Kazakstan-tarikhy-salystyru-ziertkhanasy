@@ -128,7 +128,8 @@ function Landing({ onBegin }: { onBegin: () => void }) {
             <Scene 
               id="landing-ai"
               isAi={true} 
-              webglClassName="opacity-40 mix-blend-overlay transition-opacity duration-1000 group-hover:opacity-60" 
+              autoActivate
+              webglClassName="opacity-100 transition-opacity duration-1000" 
               fallbackClassName="opacity-100 transition-transform duration-1000 group-hover:scale-105"
             />
           </div>
@@ -392,7 +393,7 @@ function SourceAnswer({ item, source, onNext, onBack }: { item: ComparisonData; 
           
           {/* 3D Context visualization on the side */}
           <div className={`${isAi ? 'block h-[360px] mt-4' : 'hidden'} lg:block lg:h-full lg:mt-0 relative border border-border rounded-3xl overflow-hidden glass-panel`}>
-            <Scene id="source-answer-scene" isAi={isAi} topicId={item.topicId} />
+             <Scene id="source-answer-scene" isAi={isAi} topicId={item.topicId} autoActivate={isAi} />
             <div className="absolute top-8 left-8 right-8 z-10 flex items-center justify-between">
                <span className="font-mono text-[10px] uppercase tracking-widest text-muted-foreground bg-background/50 backdrop-blur-md px-3 py-1 border border-border rounded-sm">
                  {isAi ? 'ЖИ Моделі' : 'Тарихи Артефакт'}
