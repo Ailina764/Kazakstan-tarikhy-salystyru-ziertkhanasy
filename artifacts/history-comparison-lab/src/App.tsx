@@ -147,18 +147,18 @@ function Landing({ onBegin }: { onBegin: () => void }) {
         {/* Content */}
         <div className="relative z-10 flex-1 grid lg:grid-cols-2">
           {/* AI Text */}
-          <div className="p-8 lg:p-24 flex flex-col justify-center items-center lg:items-start text-center lg:text-left pt-12 lg:pt-24">
+          <div className="p-8 lg:p-24 flex flex-col justify-center items-center lg:items-start text-center lg:text-left pt-12 lg:pt-24 lg:-translate-y-8">
             <span className="font-mono text-[10px] uppercase tracking-[.3em] text-[#4A6D7C] mb-6 lg:mb-8 block bg-background/60 lg:bg-transparent backdrop-blur-md lg:backdrop-blur-none px-4 py-2 rounded-full border border-border/50 lg:border-transparent">
               Жасанды Интеллект
             </span>
-            <h1 className="font-serif text-5xl lg:text-7xl leading-[1.1] text-foreground mb-4 lg:mb-8 bg-background/40 lg:bg-transparent p-4 lg:p-0 rounded-2xl backdrop-blur-sm lg:backdrop-blur-none">
+            <h1 className="font-serif text-5xl lg:text-6xl xl:text-7xl leading-[1.1] text-foreground mb-4 lg:mb-8 bg-background/40 lg:bg-transparent p-4 lg:p-0 rounded-2xl backdrop-blur-sm lg:backdrop-blur-none">
               Шындық пен <br className="hidden lg:block"/>
               <span className="italic text-[#4A6D7C]">ЖИ</span>
             </h1>
           </div>
           
           {/* History Text & CTA */}
-          <div className="p-8 lg:p-24 flex flex-col justify-center items-center lg:items-end text-center lg:text-right pb-32 lg:pb-24">
+          <div className="p-8 lg:p-24 flex flex-col justify-center items-center lg:items-end text-center lg:text-right pb-32 lg:pb-24 [@media(max-height:600px)]:-translate-y-24">
             <span className="font-mono text-[10px] uppercase tracking-[.3em] text-[#8C3A2B] mb-6 lg:mb-8 block bg-background/60 lg:bg-transparent backdrop-blur-md lg:backdrop-blur-none px-4 py-2 rounded-full border border-border/50 lg:border-transparent">
               Тарихи мұра
             </span>
@@ -172,7 +172,7 @@ function Landing({ onBegin }: { onBegin: () => void }) {
         </div>
 
         {/* Center overlay info */}
-        <div className="absolute bottom-8 lg:bottom-12 left-1/2 -translate-x-1/2 z-20 flex gap-6 lg:gap-12 bg-background/90 backdrop-blur-xl px-8 lg:px-12 py-4 lg:py-6 rounded-full border border-border shadow-2xl w-[90%] sm:w-auto justify-center">
+        <div className="fixed bottom-2 lg:bottom-3 left-1/2 -translate-x-1/2 z-20 flex gap-6 lg:gap-12 bg-background/90 backdrop-blur-xl px-8 lg:px-12 py-4 lg:py-6 rounded-full border border-border shadow-2xl w-[90%] sm:w-auto justify-center">
           <div className="flex flex-col items-center gap-1 lg:gap-2">
              <BookOpen size={18} className="text-gold lg:w-5 lg:h-5" />
              <span className="font-mono text-[8px] lg:text-[10px] uppercase tracking-widest text-center">7-сынып</span>

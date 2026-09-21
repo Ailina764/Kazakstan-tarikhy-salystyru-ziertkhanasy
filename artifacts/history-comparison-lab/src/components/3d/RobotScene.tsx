@@ -80,7 +80,7 @@ export default function RobotScene({ placement, onReady, onError }: RobotScenePr
     const robotGroup = new THREE.Group();
     robotGroup.position.set(
       placement === 'landing' ? 0.68 : 0,
-      placement === 'landing' ? 0.78 : 0,
+      placement === 'landing' ? 0.05 : 0,
       0,
     );
     scene.add(robotGroup);
@@ -98,7 +98,7 @@ export default function RobotScene({ placement, onReady, onError }: RobotScenePr
         const center = bounds.getCenter(new THREE.Vector3());
         robot.position.sub(center);
 
-        const targetSize = placement === 'landing' ? 1.8 : 2.85;
+        const targetSize = placement === 'landing' ? 1.05 : 2.85;
         const scale = targetSize / Math.max(size.x, size.y, size.z);
         robot.scale.setScalar(scale);
         robot.rotation.y = placement === 'landing' ? -0.08 : 0.04;

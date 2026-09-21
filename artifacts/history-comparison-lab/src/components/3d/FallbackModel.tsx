@@ -251,7 +251,7 @@ export function FallbackModel({ isAi, topicId, placement = 'panel' }: { isAi?: b
       <div
         className={`relative flex items-center justify-center motion-safe:animate-float-gently ${
           isAi && placement === 'landing'
-            ? 'w-36 h-44 translate-x-[15%] -translate-y-[40%] lg:w-64 lg:h-72 lg:translate-x-[80%] lg:-translate-y-[80%]'
+            ? 'w-32 h-40 translate-x-[12%] -translate-y-[46%] lg:w-52 lg:h-60 lg:translate-x-[85%] lg:-translate-y-[30%]'
             : 'w-64 h-72 lg:w-96 lg:h-[28rem]'
         }`}
         style={transformStyle}
