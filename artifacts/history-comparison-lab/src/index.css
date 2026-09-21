@@ -181,6 +181,16 @@
   50% { transform: translateY(-8px); }
 }
 
+@keyframes landing-ornament-spin {
+  from { transform: rotate(0deg); }
+  to { transform: rotate(360deg); }
+}
+
+@keyframes landing-ornament-spin-reverse {
+  from { transform: rotate(360deg); }
+  to { transform: rotate(0deg); }
+}
+
 .animate-fade-in-up {
   animation: fade-in-up 0.8s cubic-bezier(0.16, 1, 0.3, 1) forwards;
 }
@@ -195,6 +205,26 @@
 
 .animate-float-gently {
   animation: float-gently 6s ease-in-out infinite;
+}
+
+.landing-ornament-spin,
+.landing-ornament-spin-reverse {
+  transform-origin: 200px 200px;
+}
+
+.landing-ornament-spin {
+  animation: landing-ornament-spin 52s linear infinite;
+}
+
+.landing-ornament-spin-reverse {
+  animation: landing-ornament-spin-reverse 68s linear infinite;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .landing-ornament-spin,
+  .landing-ornament-spin-reverse {
+    animation: none;
+  }
 }
 
 .stagger-1 { animation-delay: 100ms; }

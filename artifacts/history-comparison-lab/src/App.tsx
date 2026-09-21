@@ -33,6 +33,60 @@ function ArchivalPlaceholder({ topicId, isAi = false, id }: { topicId: string, i
   );
 }
 
+function LandingOrnament() {
+  const outerAngles = [0, 45, 90, 135, 180, 225, 270, 315];
+  const innerAngles = [0, 90, 180, 270];
+
+  return (
+    <div className="absolute inset-0 z-0 flex items-center justify-center overflow-hidden pointer-events-none" aria-hidden="true">
+      <div className="relative w-[92%] max-w-[680px] aspect-square">
+        <div className="absolute inset-[8%] rounded-full bg-[#4A6D7C]/[0.035] blur-2xl" />
+        <svg
+          viewBox="0 0 400 400"
+          className="relative w-full h-full overflow-visible text-[#4A6D7C] opacity-[0.22] dark:opacity-[0.17]"
+        >
+          <circle cx="200" cy="200" r="152" fill="none" stroke="currentColor" strokeWidth="1.5" strokeDasharray="2 13" opacity="0.55" />
+          <circle cx="200" cy="200" r="119" fill="none" stroke="#CFA052" strokeWidth="1" opacity="0.5" />
+
+          <g className="landing-ornament-spin">
+            {outerAngles.map((angle) => (
+              <g key={angle} transform={`rotate(${angle} 200 200)`}>
+                <path
+                  d="M200 24c9 18 24 29 44 31-7 14-18 24-34 30 17 10 29 25 35 45-19-5-34-16-45-33-11 17-26 28-45 33 6-20 18-35 35-45-16-6-27-16-34-30 20-2 35-13 44-31Z"
+                  fill="currentColor"
+                />
+                <path
+                  d="M200 67c9 10 18 17 29 22-10 6-20 9-29 9s-19-3-29-9c11-5 20-12 29-22Z"
+                  fill="#CFA052"
+                  opacity="0.72"
+                />
+              </g>
+            ))}
+          </g>
+
+          <g className="landing-ornament-spin-reverse">
+            {innerAngles.map((angle) => (
+              <g key={angle} transform={`rotate(${angle} 200 200)`}>
+                <path
+                  d="M200 101c25 0 44 15 47 37 3 21-11 40-32 43-15 2-29-7-31-21-2-12 6-23 18-25 9-1 17 4 21 12 0-14-9-24-23-26-21-2-38 14-40 35-3 28 19 50 48 49-13 14-30 21-49 18-35-5-59-36-54-70 5-32 34-53 75-52Z"
+                  fill="none"
+                  stroke="currentColor"
+                  strokeWidth="8"
+                  strokeLinecap="round"
+                  strokeLinejoin="round"
+                />
+              </g>
+            ))}
+            <path d="M200 156l44 44-44 44-44-44 44-44Z" fill="none" stroke="#CFA052" strokeWidth="5" />
+            <circle cx="200" cy="200" r="18" fill="currentColor" opacity="0.68" />
+            <circle cx="200" cy="200" r="7" fill="#CFA052" />
+          </g>
+        </svg>
+      </div>
+    </div>
+  );
+}
+
 function Brand({ onClick }: { onClick: () => void }) {
   return (
     <button onClick={onClick} className="group flex items-center gap-4 text-left">
@@ -151,9 +205,11 @@ function Landing({ onBegin }: { onBegin: () => void }) {
 
         {/* Right Side: Robot */}
         <div className="w-full lg:w-1/2 h-[42vh] min-h-[320px] lg:h-[calc(100vh-89px)] relative group order-2 pb-4 lg:pb-0 lg:-translate-x-16 xl:-translate-x-20">
+          <LandingOrnament />
           <Scene 
             id="landing-ai"
             isAi={true} 
+            className="z-10"
             webglClassName="opacity-100 transition-opacity duration-1000" 
           />
         </div>
