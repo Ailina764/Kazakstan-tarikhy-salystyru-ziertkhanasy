@@ -118,75 +118,66 @@ function SectionKicker({ children }: { children: ReactNode }) {
 
 function Landing({ onBegin }: { onBegin: () => void }) {
   return (
-    <motion.div variants={pageVariants} initial="initial" animate="animate" exit="exit" className="min-h-[100dvh] flex pt-[89px]">
-      <div className="flex-1 relative w-full flex flex-col">
+    <motion.div variants={pageVariants} initial="initial" animate="animate" exit="exit" className="relative min-h-[100dvh] flex flex-col pt-[89px]">
+      {/* Cinematic Background */}
+      <div className="absolute inset-0 z-0 bg-background overflow-hidden pointer-events-none">
+        <div className="absolute top-0 left-0 w-full lg:w-1/2 h-full bg-gradient-to-br from-[#4A6D7C]/15 to-transparent" />
+      </div>
+
+      <div className="flex-1 relative z-10 w-full flex flex-col lg:flex-row max-w-[1600px] mx-auto">
         
-        {/* Background Models (Mobile & Desktop) */}
-        <div className="absolute inset-0 z-0 flex">
-          {/* Left Side: AI */}
-          <div className="w-1/2 h-full relative bg-gradient-to-br from-[#4A6D7C]/10 to-transparent group">
-            <Scene 
-              id="landing-ai"
-              isAi={true} 
-              autoActivate
-              webglClassName="opacity-100 transition-opacity duration-1000" 
-              fallbackClassName="opacity-100 transition-transform duration-1000 group-hover:scale-105"
-            />
-          </div>
-          {/* Right Side: History */}
-          <div className="w-1/2 h-full relative bg-gradient-to-bl from-[#8C3A2B]/10 to-transparent group">
-            <Scene 
-              id="landing-history"
-              topicId="abulkhair-khan" 
-              webglClassName="opacity-40 mix-blend-overlay transition-opacity duration-1000 group-hover:opacity-60" 
-              fallbackClassName="opacity-100 transition-transform duration-1000 group-hover:scale-105"
-            />
+        {/* Left Side: Robot */}
+        <div className="w-full lg:w-1/2 h-[38vh] min-h-[280px] lg:h-[calc(100vh-89px)] relative group order-1 pb-4 lg:pb-0">
+          <Scene 
+            id="landing-ai"
+            isAi={true} 
+            autoActivate
+            webglClassName="opacity-100 transition-opacity duration-1000" 
+            fallbackClassName="opacity-100 transition-transform duration-1000 group-hover:scale-105"
+          />
+        </div>
+
+        {/* Right Side: Content */}
+        <div className="w-full lg:w-1/2 flex flex-col justify-start px-6 sm:px-12 lg:px-20 xl:px-24 py-4 lg:pt-10 xl:pt-14 order-2 text-center lg:text-left z-20 pb-6 lg:pb-32">
+          <div className="max-w-xl mx-auto lg:mx-0">
+             <span className="inline-block font-mono text-[10px] sm:text-xs uppercase tracking-[.3em] text-[#4A6D7C] mb-4 sm:mb-5 px-4 py-2 rounded-full border border-[#4A6D7C]/30 bg-[#4A6D7C]/5 backdrop-blur-sm">
+               Зерттеу зертханасы
+             </span>
+             
+             <h1 className="font-serif text-5xl sm:text-6xl lg:text-6xl xl:text-7xl leading-[1.02] text-foreground mb-4 sm:mb-5">
+               Шындық пен <br />
+               <span className="italic text-[#4A6D7C]">ЖИ</span>
+             </h1>
+             
+             <p className="font-sans text-base sm:text-lg lg:text-lg xl:text-xl leading-relaxed text-muted-foreground mb-6 sm:mb-7 border-l-0 lg:border-l-2 border-[#4A6D7C]/30 lg:pl-6">
+               Қазақстан тарихын екі дереккөз арқылы зертте. ЖИ түсіндірмесі мен оқулық дерегін қатар қой. Ұқсастықты тап, айырмашылықты байқа.
+             </p>
+             
+             <div className="flex flex-col sm:flex-row items-center gap-6 justify-center lg:justify-start">
+               <PrimaryButton onClick={onBegin} className="w-full sm:w-auto py-4 sm:py-5 px-8 sm:px-10 text-sm sm:text-base shadow-xl">
+                 Зерттеуді бастау <ArrowRight size={18} className="ml-2" />
+               </PrimaryButton>
+             </div>
           </div>
         </div>
 
-        {/* Content */}
-        <div className="relative z-10 flex-1 grid lg:grid-cols-2">
-          {/* AI Text */}
-          <div className="p-8 lg:p-24 flex flex-col justify-center items-center lg:items-start text-center lg:text-left pt-12 lg:pt-24 lg:-translate-y-8">
-            <span className="font-mono text-[10px] uppercase tracking-[.3em] text-[#4A6D7C] mb-6 lg:mb-8 block bg-background/60 lg:bg-transparent backdrop-blur-md lg:backdrop-blur-none px-4 py-2 rounded-full border border-border/50 lg:border-transparent">
-              Жасанды Интеллект
-            </span>
-            <h1 className="font-serif text-5xl lg:text-6xl xl:text-7xl leading-[1.1] text-foreground mb-4 lg:mb-8 bg-background/40 lg:bg-transparent p-4 lg:p-0 rounded-2xl backdrop-blur-sm lg:backdrop-blur-none">
-              Шындық пен <br className="hidden lg:block"/>
-              <span className="italic text-[#4A6D7C]">ЖИ</span>
-            </h1>
-          </div>
-          
-          {/* History Text & CTA */}
-          <div className="p-8 lg:p-24 flex flex-col justify-center items-center lg:items-end text-center lg:text-right pb-32 lg:pb-24 [@media(max-height:600px)]:-translate-y-24">
-            <span className="font-mono text-[10px] uppercase tracking-[.3em] text-[#8C3A2B] mb-6 lg:mb-8 block bg-background/60 lg:bg-transparent backdrop-blur-md lg:backdrop-blur-none px-4 py-2 rounded-full border border-border/50 lg:border-transparent">
-              Тарихи мұра
-            </span>
-            <p className="font-sans text-base lg:text-lg leading-relaxed text-foreground lg:text-muted-foreground mb-8 lg:mb-12 max-w-xl bg-background/70 lg:bg-transparent p-5 lg:p-0 rounded-2xl backdrop-blur-md lg:backdrop-blur-none border border-border/30 lg:border-transparent">
-              Қазақстан тарихын екі дереккөз арқылы зертте. ЖИ түсіндірмесі мен оқулық дерегін қатар қой. Ұқсастықты тап, айырмашылықты байқа.
-            </p>
-            <PrimaryButton onClick={onBegin}>
-              Зерттеуді бастау <ArrowRight size={16} />
-            </PrimaryButton>
-          </div>
-        </div>
+      </div>
 
-        {/* Center overlay info */}
-        <div className="fixed bottom-2 lg:bottom-3 left-1/2 -translate-x-1/2 z-20 flex gap-6 lg:gap-12 bg-background/90 backdrop-blur-xl px-8 lg:px-12 py-4 lg:py-6 rounded-full border border-border shadow-2xl w-[90%] sm:w-auto justify-center">
-          <div className="flex flex-col items-center gap-1 lg:gap-2">
-             <BookOpen size={18} className="text-gold lg:w-5 lg:h-5" />
-             <span className="font-mono text-[8px] lg:text-[10px] uppercase tracking-widest text-center">7-сынып</span>
-          </div>
-          <div className="w-[1px] h-8 lg:h-10 bg-border" />
-          <div className="flex flex-col items-center gap-1 lg:gap-2">
-             <FileText size={18} className="text-gold lg:w-5 lg:h-5" />
-             <span className="font-mono text-[8px] lg:text-[10px] uppercase tracking-widest text-center">10 Сұрақ</span>
-          </div>
-          <div className="w-[1px] h-8 lg:h-10 bg-border" />
-          <div className="flex flex-col items-center gap-1 lg:gap-2">
-             <Layers size={18} className="text-gold lg:w-5 lg:h-5" />
-             <span className="font-mono text-[8px] lg:text-[10px] uppercase tracking-widest text-center">2 Дереккөз</span>
-          </div>
+      {/* Center bottom overlay info */}
+      <div className="relative lg:fixed lg:bottom-8 lg:left-1/2 lg:-translate-x-1/2 z-30 flex gap-4 sm:gap-12 bg-background/80 backdrop-blur-xl px-6 sm:px-16 py-4 sm:py-5 rounded-full border border-border shadow-2xl w-[92%] sm:w-auto justify-between sm:justify-center items-center mx-auto mt-3 mb-6 lg:mt-0 lg:mb-0">
+        <div className="flex flex-col items-center gap-1.5 flex-1 sm:flex-none">
+           <BookOpen size={18} className="text-gold lg:w-5 lg:h-5" />
+           <span className="font-mono text-[8px] sm:text-[10px] uppercase tracking-widest text-center whitespace-nowrap">7-сынып</span>
+        </div>
+        <div className="w-[1px] h-8 sm:h-12 bg-border shrink-0" />
+        <div className="flex flex-col items-center gap-1.5 flex-1 sm:flex-none">
+           <FileText size={18} className="text-gold lg:w-5 lg:h-5" />
+           <span className="font-mono text-[8px] sm:text-[10px] uppercase tracking-widest text-center whitespace-nowrap">10 Сұрақ</span>
+        </div>
+        <div className="w-[1px] h-8 sm:h-12 bg-border shrink-0" />
+        <div className="flex flex-col items-center gap-1.5 flex-1 sm:flex-none">
+           <Layers size={18} className="text-gold lg:w-5 lg:h-5" />
+           <span className="font-mono text-[8px] sm:text-[10px] uppercase tracking-widest text-center whitespace-nowrap">2 Дереккөз</span>
         </div>
       </div>
     </motion.div>

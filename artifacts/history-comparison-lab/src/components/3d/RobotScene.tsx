@@ -3,7 +3,7 @@ import * as THREE from 'three';
 import { GLTFLoader } from 'three/examples/jsm/loaders/GLTFLoader.js';
 import { MeshoptDecoder } from 'three/examples/jsm/libs/meshopt_decoder.module.js';
 
-const ROBOT_HEAD_URL = '/assets/models/robot-waving.glb';
+const ROBOT_MODEL_URL = '/assets/models/robot-nexbot.glb';
 
 interface RobotSceneProps {
   placement: 'landing' | 'panel';
@@ -77,18 +77,15 @@ export default function RobotScene({ placement, onReady, onError }: RobotScenePr
     warmLight.position.set(3, -2, 2);
     scene.add(warmLight);
 
+    const baseY = placement === 'landing' ? -0.05 : -0.2;
     const robotGroup = new THREE.Group();
-    robotGroup.position.set(
-      placement === 'landing' ? 0.68 : 0,
-      placement === 'landing' ? 0.05 : 0,
-      0,
-    );
+    robotGroup.position.set(0, baseY, 0);
     scene.add(robotGroup);
 
     const loader = new GLTFLoader();
     loader.setMeshoptDecoder(MeshoptDecoder);
     loader.load(
-      ROBOT_HEAD_URL,
+      ROBOT_MODEL_URL,
       (gltf) => {
         if (disposed) return;
         robot = gltf.scene;
@@ -98,10 +95,10 @@ export default function RobotScene({ placement, onReady, onError }: RobotScenePr
         const center = bounds.getCenter(new THREE.Vector3());
         robot.position.sub(center);
 
-        const targetSize = placement === 'landing' ? 1.05 : 2.85;
+        const targetSize = placement === 'landing' ? 2.9 : 2.85;
         const scale = targetSize / Math.max(size.x, size.y, size.z);
         robot.scale.setScalar(scale);
-        robot.rotation.y = placement === 'landing' ? -0.08 : 0.04;
+        robot.rotation.y = placement === 'landing' ? 0.1 : 0.04;
 
         robot.traverse((child) => {
           if (child instanceof THREE.Mesh) {
@@ -144,7 +141,7 @@ export default function RobotScene({ placement, onReady, onError }: RobotScenePr
 
       robotGroup.rotation.y += ((pointer.x * 0.28) - robotGroup.rotation.y) * 0.035;
       robotGroup.rotation.x += ((-pointer.y * 0.1) - robotGroup.rotation.x) * 0.035;
-      robotGroup.position.y = Math.sin(elapsed * 0.65) * 0.06;
+      robotGroup.position.y = baseY + Math.sin(elapsed * 0.65) * 0.06;
       renderer?.render(scene, camera);
     };
     animate();

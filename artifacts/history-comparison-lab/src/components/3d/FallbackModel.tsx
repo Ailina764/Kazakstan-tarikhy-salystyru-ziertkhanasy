@@ -6,7 +6,7 @@ function RobotFallback() {
       <div className="absolute inset-[12%] rounded-full bg-[#6FA8BA]/15 blur-3xl motion-safe:animate-pulse-slow" />
       <div className="absolute inset-[8%] rounded-full border border-[#6F9BAE]/25 border-dashed motion-safe:animate-[spin_28s_linear_infinite]" />
       <img
-        src="/assets/models/robot-waving-render.png"
+        src="/assets/models/robot-nexbot-render.png"
         alt=""
         className="relative z-10 w-full h-full object-contain drop-shadow-[0_24px_30px_rgba(38,59,69,0.28)]"
         draggable={false}
@@ -251,7 +251,7 @@ export function FallbackModel({ isAi, topicId, placement = 'panel' }: { isAi?: b
       <div
         className={`relative flex items-center justify-center motion-safe:animate-float-gently ${
           isAi && placement === 'landing'
-            ? 'w-32 h-40 translate-x-[12%] -translate-y-[46%] lg:w-52 lg:h-60 lg:translate-x-[85%] lg:-translate-y-[30%]'
+            ? 'w-56 h-[22rem] lg:w-[30rem] lg:h-[38rem] -translate-y-[3%]'
             : 'w-64 h-72 lg:w-96 lg:h-[28rem]'
         }`}
         style={transformStyle}
