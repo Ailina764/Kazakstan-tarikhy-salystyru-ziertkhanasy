@@ -154,9 +154,7 @@ function Landing({ onBegin }: { onBegin: () => void }) {
           <Scene 
             id="landing-ai"
             isAi={true} 
-            autoActivate
             webglClassName="opacity-100 transition-opacity duration-1000" 
-            fallbackClassName="opacity-100 transition-transform duration-1000 group-hover:scale-105"
           />
         </div>
 
@@ -372,7 +370,7 @@ function SourceAnswer({ item, source, onNext, onBack }: { item: ComparisonData; 
                 : 'hidden border-0 bg-transparent'
             } lg:block lg:h-full lg:mt-0 relative rounded-3xl overflow-hidden`}
           >
-             <Scene id="source-answer-scene" isAi={isAi} topicId={item.topicId} autoActivate />
+             <Scene id="source-answer-scene" isAi={isAi} topicId={item.topicId} />
             <div className="absolute top-8 left-8 right-8 z-10 flex items-center justify-between">
                <span
                  className="font-mono text-[10px] uppercase tracking-widest text-muted-foreground px-3 py-1 rounded-sm bg-transparent border-0"
