@@ -93,8 +93,9 @@ export default function BookScene({ onReady, onError }: BookSceneProps) {
         const center = bounds.getCenter(new THREE.Vector3());
         books.position.sub(center);
 
-        const scale = 2.7 / Math.max(size.x, size.y, size.z);
-        books.scale.setScalar(scale);
+        const modelRoot = new THREE.Group();
+        const scale = 1.75 / Math.max(size.x, size.y, size.z);
+        modelRoot.scale.setScalar(scale);
         books.rotation.y = -0.18;
 
         books.traverse((child) => {
@@ -104,7 +105,8 @@ export default function BookScene({ onReady, onError }: BookSceneProps) {
           }
         });
 
-        bookGroup.add(books);
+        modelRoot.add(books);
+        bookGroup.add(modelRoot);
         readyRef.current();
       },
       undefined,
