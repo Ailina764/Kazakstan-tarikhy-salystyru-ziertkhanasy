@@ -1,45 +1,7 @@
-import React, { useMemo, useRef } from 'react';
+import React, { useRef } from 'react';
 import { useFrame } from '@react-three/fiber';
-import { Sphere, MeshDistortMaterial, useGLTF } from '@react-three/drei';
+import { Sphere, MeshDistortMaterial } from '@react-three/drei';
 import * as THREE from 'three';
-
-const ROBOT_HEAD_URL = '/assets/models/robot-head.glb';
-
-export function RobotHead({ placement = 'panel' }: { placement?: 'landing' | 'panel' }) {
-  const group = useRef<THREE.Group>(null);
-  const { scene } = useGLTF(ROBOT_HEAD_URL);
-  const model = useMemo(() => {
-    const clone = scene.clone(true);
-    clone.traverse((child) => {
-      if (child instanceof THREE.Mesh) {
-        child.castShadow = true;
-        child.receiveShadow = true;
-      }
-    });
-    return clone;
-  }, [scene]);
-
-  useFrame((state) => {
-    if (!group.current) return;
-    const targetRotation = placement === 'landing' ? -0.2 : 0.12;
-    group.current.rotation.y = targetRotation + Math.sin(state.clock.elapsedTime * 0.35) * 0.16;
-  });
-
-  const isLanding = placement === 'landing';
-
-  return (
-    <group
-      ref={group}
-      position={isLanding ? [1.85, -2.35, 0] : [0, -2.05, 0]}
-      rotation={[0.02, isLanding ? -0.2 : 0.12, 0]}
-      scale={isLanding ? 3.15 : 3.8}
-    >
-      <primitive object={model} dispose={null} />
-    </group>
-  );
-}
-
-useGLTF.preload(ROBOT_HEAD_URL);
 
 export function AiOrb({ color = "#4A6D7C" }) {
   const meshRef = useRef<THREE.Mesh>(null);

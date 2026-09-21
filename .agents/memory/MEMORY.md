@@ -1,0 +1,1 @@
+- [Blender headless rendering](blender-headless-rendering.md) — use Cycles CPU for GLB fallback renders because Eevee and Workbench require unavailable GLX/EGL.

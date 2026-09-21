@@ -3,7 +3,7 @@ import * as THREE from 'three';
 import { GLTFLoader } from 'three/examples/jsm/loaders/GLTFLoader.js';
 import { MeshoptDecoder } from 'three/examples/jsm/libs/meshopt_decoder.module.js';
 
-const ROBOT_HEAD_URL = '/assets/models/robot-head.glb';
+const ROBOT_HEAD_URL = '/assets/models/robot-waving.glb';
 
 interface RobotSceneProps {
   placement: 'landing' | 'panel';
@@ -36,6 +36,16 @@ export default function RobotScene({ placement, onReady, onError }: RobotScenePr
     camera.position.set(0, 0.1, 4.2);
 
     try {
+      const probe = document.createElement('canvas');
+      const canUseWebGL = Boolean(
+        window.WebGLRenderingContext
+        && (probe.getContext('webgl2') || probe.getContext('webgl')),
+      );
+      if (!canUseWebGL) {
+        errorRef.current();
+        return;
+      }
+
       renderer = new THREE.WebGLRenderer({
         alpha: true,
         antialias: true,
@@ -69,8 +79,8 @@ export default function RobotScene({ placement, onReady, onError }: RobotScenePr
 
     const robotGroup = new THREE.Group();
     robotGroup.position.set(
-      placement === 'landing' ? 0.95 : 0,
-      placement === 'landing' ? 1.05 : 0,
+      placement === 'landing' ? 0.68 : 0,
+      placement === 'landing' ? 0.78 : 0,
       0,
     );
     scene.add(robotGroup);
@@ -88,10 +98,10 @@ export default function RobotScene({ placement, onReady, onError }: RobotScenePr
         const center = bounds.getCenter(new THREE.Vector3());
         robot.position.sub(center);
 
-        const targetSize = placement === 'landing' ? 1.85 : 3.05;
+        const targetSize = placement === 'landing' ? 1.8 : 2.85;
         const scale = targetSize / Math.max(size.x, size.y, size.z);
         robot.scale.setScalar(scale);
-        robot.rotation.y = placement === 'landing' ? -0.18 : 0.08;
+        robot.rotation.y = placement === 'landing' ? -0.08 : 0.04;
 
         robot.traverse((child) => {
           if (child instanceof THREE.Mesh) {
@@ -127,10 +137,10 @@ export default function RobotScene({ placement, onReady, onError }: RobotScenePr
     container.addEventListener('pointermove', handlePointerMove);
     resize();
 
-    const clock = new THREE.Clock();
+    const startedAt = performance.now();
     const animate = () => {
       animationFrame = window.requestAnimationFrame(animate);
-      const elapsed = clock.getElapsedTime();
+      const elapsed = (performance.now() - startedAt) / 1000;
 
       robotGroup.rotation.y += ((pointer.x * 0.28) - robotGroup.rotation.y) * 0.035;
       robotGroup.rotation.x += ((-pointer.y * 0.1) - robotGroup.rotation.x) * 0.035;

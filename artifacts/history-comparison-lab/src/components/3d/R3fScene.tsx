@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import { Canvas } from '@react-three/fiber';
 import { Environment, Float, PresentationControls, ContactShadows } from '@react-three/drei';
-import { RobotHead, TopicModel } from './models';
+import { AiOrb, TopicModel } from './models';
 
 function checkWebGL(): boolean {
   try {
@@ -57,7 +57,7 @@ export default function R3fScene({ sceneId, isAi, topicId, onReady }: R3fScenePr
         azimuth={[-Math.PI / 1.4, Math.PI / 2]}
       >
         <Float speed={1.5} rotationIntensity={0.5} floatIntensity={0.5}>
-          {isAi ? <RobotHead placement={sceneId === 'landing-ai' ? 'landing' : 'panel'} /> : <TopicModel topicId={topicId || ''} />}
+          {isAi ? <AiOrb color="#4A6D7C" /> : <TopicModel topicId={topicId || ''} />}
         </Float>
       </PresentationControls>
       <ContactShadows position={[0, -3, 0]} opacity={0.4} scale={20} blur={2} far={4} />
