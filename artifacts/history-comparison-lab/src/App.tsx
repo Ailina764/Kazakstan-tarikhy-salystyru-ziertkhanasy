@@ -4,7 +4,6 @@ import {
 } from 'lucide-react';
 import { questionsData, topicInfo, type ComparisonData } from './data';
 import { Scene } from './components/3d/Scene';
-import { AiOrb, TopicModel } from './components/3d/models';
 import { motion, AnimatePresence, type Variants } from 'framer-motion';
 
 type Step = 'landing' | 'topics' | 'questions' | 'intro' | 'ai' | 'textbook' | 'comparison' | 'final';
@@ -20,13 +19,11 @@ const pageVariants: Variants = {
 
 // --- Subcomponents ---
 
-function ArchivalPlaceholder({ topicId, isAi = false }: { topicId: string, isAi?: boolean }) {
+function ArchivalPlaceholder({ topicId, isAi = false, id }: { topicId: string, isAi?: boolean, id: string }) {
   return (
     <div className="relative w-full h-[400px] lg:h-[600px] flex items-center justify-center cinematic-border bg-black/5 dark:bg-white/5 backdrop-blur-sm p-4 rounded-lg overflow-hidden group">
       <div className="absolute inset-0 z-0">
-         <Scene isAi={isAi} topicId={topicId}>
-           {isAi ? <AiOrb color="#4A6D7C" /> : <TopicModel topicId={topicId} />}
-         </Scene>
+         <Scene id={id} isAi={isAi} topicId={topicId} />
       </div>
       <div className="absolute bottom-4 left-4 right-4 z-10 flex items-center justify-between pointer-events-none opacity-50 group-hover:opacity-100 transition-opacity">
         <span className="font-mono text-[10px] uppercase tracking-widest text-foreground">{isAi ? 'Жасанды Интеллект' : '3D Нысан'}</span>
@@ -129,22 +126,20 @@ function Landing({ onBegin }: { onBegin: () => void }) {
           {/* Left Side: AI */}
           <div className="w-1/2 h-full relative bg-gradient-to-br from-[#4A6D7C]/10 to-transparent group">
             <Scene 
+              id="landing-ai"
               isAi={true} 
               webglClassName="opacity-40 mix-blend-overlay transition-opacity duration-1000 group-hover:opacity-60" 
               fallbackClassName="opacity-100 transition-transform duration-1000 group-hover:scale-105"
-            >
-              <AiOrb color="#4A6D7C" />
-            </Scene>
+            />
           </div>
           {/* Right Side: History */}
           <div className="w-1/2 h-full relative bg-gradient-to-bl from-[#8C3A2B]/10 to-transparent group">
             <Scene 
+              id="landing-history"
               topicId="abulkhair-khan" 
               webglClassName="opacity-40 mix-blend-overlay transition-opacity duration-1000 group-hover:opacity-60" 
               fallbackClassName="opacity-100 transition-transform duration-1000 group-hover:scale-105"
-            >
-              <TopicModel topicId="abulkhair-khan" />
-            </Scene>
+            />
           </div>
         </div>
 
@@ -281,7 +276,7 @@ function Questions({ topicId, onSelect, onBack }: { topicId: string; onSelect: (
         </div>
         
         <div className="hidden lg:block relative">
-           <ArchivalPlaceholder topicId={topicId} />
+           <ArchivalPlaceholder id="questions-placeholder" topicId={topicId} />
         </div>
       </main>
     </motion.div>
@@ -314,7 +309,7 @@ function Intro({ item, onNext, onBack }: { item: ComparisonData; onNext: () => v
         </div>
 
         <div className="relative">
-          <ArchivalPlaceholder topicId={item.topicId} />
+          <ArchivalPlaceholder id="intro-placeholder" topicId={item.topicId} />
           <div className="absolute -bottom-6 -left-6 glass-panel p-6 rounded-2xl max-w-sm border border-border shadow-2xl flex items-start gap-4">
              <Info size={24} className="text-gold shrink-0" />
              <p className="font-sans text-sm text-foreground leading-relaxed">
@@ -397,9 +392,7 @@ function SourceAnswer({ item, source, onNext, onBack }: { item: ComparisonData; 
           
           {/* 3D Context visualization on the side */}
           <div className="hidden lg:block h-full relative border border-border rounded-3xl overflow-hidden glass-panel">
-            <Scene>
-               {isAi ? <AiOrb color="#4A6D7C" /> : <TopicModel topicId={item.topicId} />}
-            </Scene>
+            <Scene id="source-answer-scene" isAi={isAi} topicId={item.topicId} />
             <div className="absolute top-8 left-8 right-8 z-10 flex items-center justify-between">
                <span className="font-mono text-[10px] uppercase tracking-widest text-muted-foreground bg-background/50 backdrop-blur-md px-3 py-1 border border-border rounded-sm">
                  {isAi ? 'ЖИ Моделі' : 'Тарихи Артефакт'}

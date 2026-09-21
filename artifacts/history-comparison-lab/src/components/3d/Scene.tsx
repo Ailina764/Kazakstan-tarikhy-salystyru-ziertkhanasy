@@ -1,29 +1,12 @@
-import React, { Suspense, useState, useEffect } from 'react';
-import { Canvas } from '@react-three/fiber';
-import { Environment, Float, PresentationControls, ContactShadows } from '@react-three/drei';
+import React, { useState, useEffect, Suspense } from 'react';
 import { FallbackModel } from './FallbackModel';
+import { Box, Layers, Loader2, AlertCircle } from 'lucide-react';
+import { ErrorBoundary } from './ErrorBoundary';
 
-// Safe WebGL check that avoids creating multiple contexts unnecessarily
-let cachedWebGLSupport: boolean | null = null;
-
-function checkWebGL(): boolean {
-  if (typeof window === 'undefined') return false;
-  if (cachedWebGLSupport !== null) return cachedWebGLSupport;
-  
-  try {
-    const canvas = document.createElement('canvas');
-    cachedWebGLSupport = !!(
-      window.WebGLRenderingContext && 
-      (canvas.getContext('webgl') || canvas.getContext('experimental-webgl'))
-    );
-  } catch (e) {
-    cachedWebGLSupport = false;
-  }
-  return cachedWebGLSupport;
-}
+const R3fScene = React.lazy(() => import('./R3fScene'));
 
 interface SceneProps {
-  children: React.ReactNode;
+  id: string;
   className?: string;
   webglClassName?: string;
   fallbackClassName?: string;
@@ -31,48 +14,79 @@ interface SceneProps {
   topicId?: string;
 }
 
-export function Scene({ children, className, webglClassName, fallbackClassName, isAi, topicId }: SceneProps) {
-  const [hasWebGL, setHasWebGL] = useState<boolean | null>(null);
+export function Scene({ id, className, webglClassName, fallbackClassName, isAi, topicId }: SceneProps) {
+  const [status, setStatus] = useState<'fallback' | 'loading' | 'active' | 'error'>('fallback');
 
   useEffect(() => {
-    setHasWebGL(checkWebGL());
-  }, []);
+    const handleActivate = (e: CustomEvent) => {
+      if (e.detail !== id && status !== 'fallback' && status !== 'error') {
+        setStatus('fallback');
+      }
+    };
+    window.addEventListener('activate-3d', handleActivate as EventListener);
+    return () => window.removeEventListener('activate-3d', handleActivate as EventListener);
+  }, [id, status]);
 
-  if (hasWebGL === null) {
-    return <div className={`relative w-full h-full ${className || ''}`} />;
-  }
+  const activate3D = () => {
+    window.dispatchEvent(new CustomEvent('activate-3d', { detail: id }));
+    setStatus('loading');
+  };
 
-  if (!hasWebGL) {
-    return (
-      <div className={`relative w-full h-full flex items-center justify-center overflow-hidden ${className || ''} ${fallbackClassName || ''}`}>
-        <FallbackModel isAi={isAi} topicId={topicId} />
-      </div>
-    );
-  }
+  const deactivate3D = () => {
+    setStatus('fallback');
+  };
 
   return (
-    <div className={`relative w-full h-full ${className || ''} ${webglClassName || ''}`}>
-      <Canvas shadows camera={{ position: [0, 0, 8], fov: 45 }}>
-        <ambientLight intensity={0.5} />
-        <spotLight position={[10, 10, 10]} angle={0.15} penumbra={1} intensity={1} castShadow />
-        <pointLight position={[-10, -10, -10]} intensity={0.5} />
-        
-        <Suspense fallback={null}>
-          <PresentationControls 
-            global 
-            snap
-            rotation={[0, 0.3, 0]} 
-            polar={[-Math.PI / 3, Math.PI / 3]} 
-            azimuth={[-Math.PI / 1.4, Math.PI / 2]}
+    <div className={`relative w-full h-full flex items-center justify-center overflow-hidden ${className || ''} ${status === 'active' ? webglClassName || '' : fallbackClassName || ''}`}>
+      
+      {/* Always render Fallback if not fully active, or underneath while loading */}
+      {status !== 'active' && (
+        <FallbackModel isAi={isAi} topicId={topicId} />
+      )}
+
+      {/* WebGL Chunk */}
+      {(status === 'loading' || status === 'active') && (
+        <ErrorBoundary onError={() => setStatus('error')}>
+          <Suspense fallback={null}>
+            <div className={`absolute inset-0 transition-opacity duration-700 ${status === 'active' ? 'opacity-100' : 'opacity-0 pointer-events-none'}`}>
+              <R3fScene isAi={isAi} topicId={topicId} onReady={() => setStatus('active')} />
+            </div>
+          </Suspense>
+        </ErrorBoundary>
+      )}
+
+      {/* Overlay Controls */}
+      <div className="absolute top-4 right-4 z-20 flex flex-col gap-2 items-end">
+        {status === 'fallback' && (
+          <button 
+            onClick={activate3D} 
+            className="flex items-center gap-2 bg-background/60 backdrop-blur-xl border border-border px-4 py-2 rounded-full text-[10px] sm:text-xs font-mono uppercase tracking-widest text-foreground hover:bg-gold hover:text-background transition-all shadow-lg"
           >
-            <Float speed={1.5} rotationIntensity={0.5} floatIntensity={0.5}>
-              {children}
-            </Float>
-          </PresentationControls>
-          <ContactShadows position={[0, -3, 0]} opacity={0.4} scale={20} blur={2} far={4} />
-          <Environment preset="city" />
-        </Suspense>
-      </Canvas>
+            <Box size={14} /> 3D режимін қосу
+          </button>
+        )}
+        
+        {status === 'loading' && (
+          <div className="flex items-center gap-2 bg-background/60 backdrop-blur-xl border border-border px-4 py-2 rounded-full text-[10px] sm:text-xs font-mono uppercase tracking-widest text-foreground shadow-lg">
+            <Loader2 size={14} className="animate-spin" /> Жүктелуде...
+          </div>
+        )}
+        
+        {status === 'active' && (
+          <button 
+            onClick={deactivate3D} 
+            className="flex items-center gap-2 bg-background/60 backdrop-blur-xl border border-border px-4 py-2 rounded-full text-[10px] sm:text-xs font-mono uppercase tracking-widest text-foreground hover:bg-foreground hover:text-background transition-all shadow-lg opacity-50 hover:opacity-100"
+          >
+            <Layers size={14} /> 2D өту
+          </button>
+        )}
+        
+        {status === 'error' && (
+          <div className="flex items-center gap-2 bg-destructive/10 backdrop-blur-xl border border-destructive/30 px-4 py-2 rounded-full text-[10px] sm:text-xs font-mono uppercase tracking-widest text-destructive shadow-lg">
+            <AlertCircle size={14} /> 3D Қолжетімсіз
+          </div>
+        )}
+      </div>
     </div>
   );
 }
