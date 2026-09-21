@@ -96,7 +96,7 @@ export default function HistoricalCharacterScene({ onReady, onError }: Historica
         const modelRoot = new THREE.Group();
         const scale = 2.25 / Math.max(size.x, size.y, size.z);
         modelRoot.scale.setScalar(scale);
-        character.rotation.y = 0.06;
+        character.rotation.y = -Math.PI / 2;
 
         character.traverse((child) => {
           if (child instanceof THREE.Mesh) {

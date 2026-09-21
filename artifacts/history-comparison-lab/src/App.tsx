@@ -276,7 +276,7 @@ function Questions({ topicId, onSelect, onBack }: { topicId: string; onSelect: (
 
   return (
     <motion.div variants={pageVariants} initial="initial" animate="animate" exit="exit" className="min-h-screen pt-[160px] pb-24 px-6 flex items-center">
-      <main className="mx-auto max-w-[1400px] w-full grid lg:grid-cols-2 gap-20">
+      <main className="mx-auto max-w-[1400px] w-full grid md:grid-cols-2 gap-10 lg:gap-20 items-start">
         <div>
           <button onClick={onBack} className="font-mono text-[10px] uppercase tracking-widest text-muted-foreground hover:text-foreground transition-colors flex items-center gap-3 mb-16">
             <ArrowLeft size={14} /> Тақырыптарға оралу
@@ -303,7 +303,7 @@ function Questions({ topicId, onSelect, onBack }: { topicId: string; onSelect: (
           </div>
         </div>
         
-        <div className="hidden lg:block relative">
+        <div className="relative md:sticky md:top-[140px]">
            <ArchivalPlaceholder id="questions-placeholder" topicId={topicId} />
         </div>
       </main>

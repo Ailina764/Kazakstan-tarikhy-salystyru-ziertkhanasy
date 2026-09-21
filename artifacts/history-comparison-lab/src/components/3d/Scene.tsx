@@ -1,10 +1,10 @@
 import React, { useState, Suspense } from 'react';
 import { ErrorBoundary } from './ErrorBoundary';
+import HistoricalCharacterScene from './HistoricalCharacterScene';
 
 const R3fScene = React.lazy(() => import('./R3fScene'));
 const RobotScene = React.lazy(() => import('./RobotScene'));
 const BookScene = React.lazy(() => import('./BookScene'));
-const HistoricalCharacterScene = React.lazy(() => import('./HistoricalCharacterScene'));
 
 interface SceneProps {
   id: string;
