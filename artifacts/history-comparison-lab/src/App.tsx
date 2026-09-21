@@ -1,6 +1,6 @@
 import React, { useState, useEffect, type ReactNode } from 'react';
 import {
-  ArrowLeft, ArrowRight, BookOpen, Check, ChevronRight, Cpu, FileText, History, Lightbulb, RotateCcw, SearchCheck, ShieldCheck, ScrollText, Landmark, Feather, Info, Layers
+  ArrowLeft, ArrowRight, BookOpen, Check, ChevronRight, Cpu, History, Lightbulb, RotateCcw, SearchCheck, ShieldCheck, ScrollText, Landmark, Feather, Info
 } from 'lucide-react';
 import { questionsData, topicInfo, type ComparisonData } from './data';
 import { Scene } from './components/3d/Scene';
@@ -126,7 +126,7 @@ function Landing({ onBegin }: { onBegin: () => void }) {
       <div className="flex-1 relative z-10 w-full flex flex-col lg:flex-row max-w-[1600px] mx-auto">
 
         {/* Left Side: Content */}
-        <div className="w-full lg:w-1/2 flex flex-col justify-start px-6 sm:px-12 lg:px-20 xl:px-24 py-4 lg:pt-10 xl:pt-14 order-1 text-center lg:text-left z-20 pb-6 lg:pb-32">
+        <div className="w-full lg:w-1/2 flex flex-col justify-start px-6 sm:px-12 lg:px-20 xl:px-24 py-4 lg:pt-10 xl:pt-14 order-1 text-center lg:text-left z-20 pb-6">
           <div className="max-w-xl mx-auto lg:mx-0">
              <span className="inline-block font-mono text-[10px] sm:text-xs uppercase tracking-[.3em] text-[#4A6D7C] mb-4 sm:mb-5 px-4 py-2 rounded-full border border-[#4A6D7C]/30 bg-[#4A6D7C]/5 backdrop-blur-sm">
                Зерттеу зертханасы
@@ -150,7 +150,7 @@ function Landing({ onBegin }: { onBegin: () => void }) {
         </div>
 
         {/* Right Side: Robot */}
-        <div className="w-full lg:w-1/2 h-[42vh] min-h-[320px] lg:h-[calc(100vh-89px)] relative group order-2 pb-4 lg:pb-0">
+        <div className="w-full lg:w-1/2 h-[42vh] min-h-[320px] lg:h-[calc(100vh-89px)] relative group order-2 pb-4 lg:pb-0 lg:-translate-x-16 xl:-translate-x-20">
           <Scene 
             id="landing-ai"
             isAi={true} 
@@ -162,23 +162,6 @@ function Landing({ onBegin }: { onBegin: () => void }) {
 
       </div>
 
-      {/* Center bottom overlay info */}
-      <div className="relative lg:fixed lg:bottom-8 lg:left-1/2 lg:-translate-x-1/2 z-30 flex gap-4 sm:gap-12 bg-background/80 backdrop-blur-xl px-6 sm:px-16 py-4 sm:py-5 rounded-full border border-border shadow-2xl w-[92%] sm:w-auto justify-between sm:justify-center items-center mx-auto mt-3 mb-6 lg:mt-0 lg:mb-0">
-        <div className="flex flex-col items-center gap-1.5 flex-1 sm:flex-none">
-           <BookOpen size={18} className="text-gold lg:w-5 lg:h-5" />
-           <span className="font-mono text-[8px] sm:text-[10px] uppercase tracking-widest text-center whitespace-nowrap">7-сынып</span>
-        </div>
-        <div className="w-[1px] h-8 sm:h-12 bg-border shrink-0" />
-        <div className="flex flex-col items-center gap-1.5 flex-1 sm:flex-none">
-           <FileText size={18} className="text-gold lg:w-5 lg:h-5" />
-           <span className="font-mono text-[8px] sm:text-[10px] uppercase tracking-widest text-center whitespace-nowrap">10 Сұрақ</span>
-        </div>
-        <div className="w-[1px] h-8 sm:h-12 bg-border shrink-0" />
-        <div className="flex flex-col items-center gap-1.5 flex-1 sm:flex-none">
-           <Layers size={18} className="text-gold lg:w-5 lg:h-5" />
-           <span className="font-mono text-[8px] sm:text-[10px] uppercase tracking-widest text-center whitespace-nowrap">2 Дереккөз</span>
-        </div>
-      </div>
     </motion.div>
   );
 }
