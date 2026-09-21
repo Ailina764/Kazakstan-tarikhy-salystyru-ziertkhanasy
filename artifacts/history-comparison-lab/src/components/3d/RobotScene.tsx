@@ -77,9 +77,10 @@ export default function RobotScene({ placement, onReady, onError }: RobotScenePr
     warmLight.position.set(3, -2, 2);
     scene.add(warmLight);
 
-    const baseY = placement === 'landing' ? -0.05 : -0.2;
+    const baseX = placement === 'landing' ? 0 : -0.2;
+    const baseY = placement === 'landing' ? -0.05 : 0.05;
     const robotGroup = new THREE.Group();
-    robotGroup.position.set(0, baseY, 0);
+    robotGroup.position.set(baseX, baseY, 0);
     scene.add(robotGroup);
 
     const loader = new GLTFLoader();

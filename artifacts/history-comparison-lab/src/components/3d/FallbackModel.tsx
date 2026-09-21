@@ -245,7 +245,12 @@ export function FallbackModel({ isAi, topicId, placement = 'panel' }: { isAi?: b
   }
 
   return (
-    <div ref={containerRef} className="w-full h-full flex items-center justify-center relative pointer-events-none">
+    <div
+      ref={containerRef}
+      className={`w-full h-full flex items-center justify-center relative pointer-events-none ${
+        isAi && placement === 'panel' ? 'lg:pr-[8%]' : ''
+      }`}
+    >
       <div
         className={`relative flex items-center justify-center motion-safe:animate-float-gently ${
           isAi && placement === 'landing'
