@@ -4,7 +4,7 @@ function RobotFallback() {
   return (
     <div className="relative w-full h-full flex items-center justify-center">
       <img
-        src="/assets/models/mini-robot-render.png"
+        src="/assets/models/mini-robot-render.png?v=2"
         alt=""
         className="relative z-10 w-full h-full object-contain"
         draggable={false}
@@ -249,8 +249,8 @@ export function FallbackModel({ isAi, topicId, placement = 'panel' }: { isAi?: b
       <div
         className={`relative flex items-center justify-center motion-safe:animate-float-gently ${
           isAi && placement === 'landing'
-            ? 'w-64 h-[24rem] lg:w-[34rem] lg:h-[42rem] -translate-y-[2%]'
-            : 'w-64 h-72 lg:w-96 lg:h-[28rem]'
+            ? 'w-56 h-[21rem] lg:w-[30rem] lg:h-[36rem]'
+            : 'w-60 h-68 lg:w-88 lg:h-[25rem]'
         }`}
         style={transformStyle}
       >

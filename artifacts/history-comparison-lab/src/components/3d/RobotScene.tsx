@@ -33,7 +33,7 @@ export default function RobotScene({ placement, onReady, onError }: RobotScenePr
     const pointer = new THREE.Vector2();
     const scene = new THREE.Scene();
     const camera = new THREE.PerspectiveCamera(42, 1, 0.01, 100);
-    camera.position.set(0, 0.1, 4.2);
+    camera.position.set(0, 0.05, 4.5);
 
     try {
       const probe = document.createElement('canvas');
@@ -95,10 +95,10 @@ export default function RobotScene({ placement, onReady, onError }: RobotScenePr
         const center = bounds.getCenter(new THREE.Vector3());
         robot.position.sub(center);
 
-        const targetSize = placement === 'landing' ? 3.05 : 2.85;
+        const targetSize = placement === 'landing' ? 2.55 : 2.5;
         const scale = targetSize / Math.max(size.x, size.y, size.z);
         robot.scale.setScalar(scale);
-        robot.rotation.y = Math.PI + (placement === 'landing' ? 0.1 : 0.04);
+        robot.rotation.y = placement === 'landing' ? 0.08 : 0.03;
 
         robot.traverse((child) => {
           if (child instanceof THREE.Mesh) {
