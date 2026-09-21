@@ -77,7 +77,7 @@ export default function RobotScene({ placement, onReady, onError }: RobotScenePr
     warmLight.position.set(3, -2, 2);
     scene.add(warmLight);
 
-    const baseX = placement === 'landing' ? 0 : -0.2;
+    const baseX = 0;
     const baseY = placement === 'landing' ? -0.05 : 0.05;
     const robotGroup = new THREE.Group();
     robotGroup.position.set(baseX, baseY, 0);
@@ -96,9 +96,10 @@ export default function RobotScene({ placement, onReady, onError }: RobotScenePr
         const center = bounds.getCenter(new THREE.Vector3());
         robot.position.sub(center);
 
+        const modelRoot = new THREE.Group();
         const targetSize = placement === 'landing' ? 2.55 : 2;
         const scale = targetSize / Math.max(size.x, size.y, size.z);
-        robot.scale.setScalar(scale);
+        modelRoot.scale.setScalar(scale);
         robot.rotation.y = placement === 'landing' ? 0.08 : 0.03;
 
         robot.traverse((child) => {
@@ -108,7 +109,8 @@ export default function RobotScene({ placement, onReady, onError }: RobotScenePr
           }
         });
 
-        robotGroup.add(robot);
+        modelRoot.add(robot);
+        robotGroup.add(modelRoot);
         readyRef.current();
       },
       undefined,
