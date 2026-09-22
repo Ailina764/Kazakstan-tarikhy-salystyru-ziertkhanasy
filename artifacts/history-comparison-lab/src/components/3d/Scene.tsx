@@ -16,18 +16,18 @@ interface SceneProps {
 
 export function Scene({ id, className, webglClassName, isAi, topicId }: SceneProps) {
   const [status, setStatus] = useState<'loading' | 'active' | 'error'>('loading');
-  const isTaukeCharacter = (
+  const isHistoricalCharacter = (
     id === 'questions-placeholder' || id === 'intro-placeholder'
-  ) && topicId === 'tauke-khan';
+  ) && (topicId === 'tauke-khan' || topicId === 'abulkhair-khan');
 
   return (
     <div className={`relative w-full h-full flex items-center justify-center overflow-hidden ${className || ''} ${status === 'active' ? webglClassName || '' : ''}`}>
-      {isTaukeCharacter && status === 'loading' && (
+      {isHistoricalCharacter && status === 'loading' && (
         <div className="absolute inset-0 flex items-center justify-center font-mono text-[10px] uppercase tracking-[0.24em] text-muted-foreground">
           3D модель жүктелуде...
         </div>
       )}
-      {isTaukeCharacter && status === 'error' && (
+      {isHistoricalCharacter && status === 'error' && (
         <div className="absolute inset-0 flex items-center justify-center px-8 text-center font-mono text-[10px] uppercase tracking-[0.2em] text-muted-foreground">
           3D модель жүктелмеді
         </div>
@@ -42,8 +42,9 @@ export function Scene({ id, className, webglClassName, isAi, topicId }: ScenePro
                   onReady={() => setStatus('active')}
                   onError={() => setStatus('error')}
                 />
-              ) : isTaukeCharacter ? (
+              ) : isHistoricalCharacter ? (
                 <HistoricalCharacterScene
+                  topicId={topicId}
                   onReady={() => setStatus('active')}
                   onError={() => setStatus('error')}
                 />

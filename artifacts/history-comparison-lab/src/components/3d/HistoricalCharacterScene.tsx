@@ -4,16 +4,21 @@ import { GLTFLoader } from 'three/examples/jsm/loaders/GLTFLoader.js';
 import { MeshoptDecoder } from 'three/examples/jsm/libs/meshopt_decoder.module.js';
 
 const TAUKE_KHAN_MODEL_URL = '/assets/models/tauke-khan.glb?v=royal-costume-1';
+const ABULKHAIR_KHAN_MODEL_URL = '/assets/models/abulkhair-khan.glb?v=1';
 
 interface HistoricalCharacterSceneProps {
+  topicId?: string;
   onReady: () => void;
   onError: () => void;
 }
 
-export default function HistoricalCharacterScene({ onReady, onError }: HistoricalCharacterSceneProps) {
+export default function HistoricalCharacterScene({ topicId, onReady, onError }: HistoricalCharacterSceneProps) {
   const containerRef = useRef<HTMLDivElement>(null);
   const readyRef = useRef(onReady);
   const errorRef = useRef(onError);
+  const isAbulkhair = topicId === 'abulkhair-khan';
+  const modelUrl = isAbulkhair ? ABULKHAIR_KHAN_MODEL_URL : TAUKE_KHAN_MODEL_URL;
+  const characterName = isAbulkhair ? 'Әбілқайыр хан' : 'Тәуке хан';
 
   useEffect(() => {
     readyRef.current = onReady;
@@ -83,7 +88,7 @@ export default function HistoricalCharacterScene({ onReady, onError }: Historica
     const loader = new GLTFLoader();
     loader.setMeshoptDecoder(MeshoptDecoder);
     loader.load(
-      TAUKE_KHAN_MODEL_URL,
+      modelUrl,
       (gltf) => {
         if (disposed) return;
         character = gltf.scene;
@@ -111,7 +116,7 @@ export default function HistoricalCharacterScene({ onReady, onError }: Historica
       },
       undefined,
       (error) => {
-        console.error('Tauke Khan model failed to load:', error);
+        console.error(`${characterName} model failed to load:`, error);
         errorRef.current();
       },
     );
@@ -170,7 +175,7 @@ export default function HistoricalCharacterScene({ onReady, onError }: Historica
       renderer?.dispose();
       renderer?.domElement.remove();
     };
-  }, []);
+  }, [characterName, modelUrl]);
 
   return (
     <div
@@ -180,7 +185,7 @@ export default function HistoricalCharacterScene({ onReady, onError }: Historica
         maskImage: 'linear-gradient(to bottom, black 0%, black 82%, transparent 100%)',
         WebkitMaskImage: 'linear-gradient(to bottom, black 0%, black 82%, transparent 100%)',
       }}
-      aria-label="Тәуке ханның интерактивті 3D моделі"
+      aria-label={`${characterName}ның интерактивті 3D моделі`}
     />
   );
 }
