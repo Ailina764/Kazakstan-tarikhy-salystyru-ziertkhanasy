@@ -1,6 +1,6 @@
 import React, { useState, useEffect, type ReactNode } from 'react';
 import {
-  ArrowLeft, ArrowRight, BookOpen, Check, ChevronRight, Cpu, History, Lightbulb, RotateCcw, SearchCheck, ShieldCheck, ScrollText, Landmark, Feather, Info
+  ArrowLeft, ArrowRight, BookOpen, Check, ChevronRight, Cpu, History, Home, Layers3, Lightbulb, ListChecks, RotateCcw, SearchCheck, ShieldCheck, ScrollText, Landmark, Feather, Info
 } from 'lucide-react';
 import { questionsData, topicInfo, type ComparisonData } from './data';
 import { Scene } from './components/3d/Scene';
@@ -117,43 +117,92 @@ function Brand({ onClick }: { onClick: () => void }) {
   );
 }
 
-function TopBar({ step, onHome, onRestart }: { step: Step; onHome: () => void; onRestart: () => void }) {
+function TopBar({
+  step,
+  onHome,
+  onQuestions,
+  onTopics,
+  onRestart,
+}: {
+  step: Step;
+  onHome: () => void;
+  onQuestions: () => void;
+  onTopics: () => void;
+  onRestart: () => void;
+}) {
   const current = Math.max(0, stepOrder.indexOf(step) - 1);
   const total = stepOrder.length - 2; // exclude landing and final from fraction
   const progress = step === 'landing' ? 0 : Math.min(100, (current / total) * 100);
+  const navigation = [
+    {
+      label: 'Басты бет',
+      icon: Home,
+      active: step === 'landing',
+      onClick: onHome,
+    },
+    {
+      label: 'Сұрақтар',
+      icon: ListChecks,
+      active: step !== 'landing' && step !== 'topics',
+      onClick: onQuestions,
+    },
+    {
+      label: 'Тақырыптар',
+      icon: Layers3,
+      active: step === 'topics',
+      onClick: onTopics,
+    },
+  ];
   
   return (
-    <header className="fixed top-0 left-0 right-0 z-40 border-b border-border bg-background/80 backdrop-blur-xl">
-      <div className="mx-auto flex max-w-[1400px] items-center justify-between px-6 py-4">
+    <header className="fixed top-0 left-0 right-0 z-40 border-b border-gold/25 bg-background/95 shadow-[0_16px_45px_-30px_rgba(72,51,25,0.65)] backdrop-blur-xl">
+      <div className="mx-auto grid max-w-[1400px] grid-cols-[1fr_auto_1fr] items-center gap-5 px-4 py-3 sm:px-6">
         <Brand onClick={onHome} />
-        
-        <div className="hidden md:flex items-center gap-12">
-          {step !== 'landing' && (
-            <div className="flex items-center gap-6">
-              <span className="font-mono text-[10px] uppercase tracking-[.2em] text-muted-foreground">Барысы</span>
-              <div className="h-[1px] w-48 bg-border relative overflow-hidden">
-                <div className="absolute top-0 left-0 bottom-0 bg-gold transition-all duration-1000 ease-out" style={{ width: `${progress}%` }} />
-              </div>
-              <span className="font-mono text-[10px] text-foreground font-medium">{Math.max(current, 1)} / {total}</span>
-            </div>
-          )}
-        </div>
+
+        <nav
+          className="hidden items-center gap-1 rounded-full border border-gold/25 bg-foreground/[0.035] p-1.5 shadow-inner sm:flex"
+          aria-label="Негізгі навигация"
+        >
+          {navigation.map(({ label, icon: Icon, active, onClick }) => (
+            <button
+              key={label}
+              type="button"
+              onClick={onClick}
+              aria-current={active ? 'page' : undefined}
+              className={`group relative flex items-center gap-2 rounded-full px-3 py-2 font-mono text-[9px] uppercase tracking-[0.14em] transition-all duration-300 md:px-4 md:text-[10px] ${
+                active
+                  ? 'bg-gold text-[#241b10] shadow-[0_8px_22px_-12px_rgba(207,160,82,0.95)]'
+                  : 'text-muted-foreground hover:-translate-y-0.5 hover:bg-background hover:text-foreground hover:shadow-sm'
+              }`}
+            >
+              <Icon size={13} strokeWidth={active ? 2.2 : 1.7} className="transition-transform duration-300 group-hover:scale-110" />
+              <span className="hidden md:inline">{label}</span>
+              <span
+                className={`absolute -bottom-1 left-1/2 h-1 w-1 -translate-x-1/2 rounded-full bg-gold transition-all duration-300 ${
+                  active ? 'scale-100 opacity-100' : 'scale-0 opacity-0'
+                }`}
+              />
+            </button>
+          ))}
+        </nav>
 
         {step !== 'landing' ? (
-          <button onClick={onRestart} className="group flex items-center gap-3 px-4 py-2 border border-border rounded-full text-xs font-medium text-foreground transition-all hover:bg-foreground hover:text-background">
+          <button onClick={onRestart} className="group ml-auto flex items-center gap-3 rounded-full border border-border bg-background/60 px-3 py-2 text-xs font-medium text-foreground transition-all duration-300 hover:-translate-y-0.5 hover:border-gold/50 hover:bg-foreground hover:text-background hover:shadow-lg sm:px-4">
             <RotateCcw size={14} className="transition-transform duration-500 group-hover:-rotate-90" />
             <span className="hidden sm:inline font-sans tracking-wide">Қайта бастау</span>
           </button>
         ) : (
-          <div className="hidden sm:flex items-center gap-6 font-mono text-[10px] uppercase tracking-widest text-muted-foreground">
-            <span>Басты бет</span>
-            <span className="w-1 h-1 rounded-full bg-border" />
-            <span>Сұрақтар</span>
-            <span className="w-1 h-1 rounded-full bg-border" />
-            <span>Тақырыптар</span>
-          </div>
+          <div className="hidden w-[130px] sm:block" aria-hidden="true" />
         )}
       </div>
+      {step !== 'landing' && (
+        <div className="absolute inset-x-0 bottom-0 h-[2px] overflow-hidden bg-border/40">
+          <div
+            className="h-full bg-gradient-to-r from-gold/70 to-gold transition-all duration-700 ease-out"
+            style={{ width: `${progress}%` }}
+          />
+        </div>
+      )}
     </header>
   );
 }
@@ -620,13 +669,32 @@ export default function App() {
     setQuestionId(0);
   };
 
+  const handleTopics = () => {
+    setStep('topics');
+    setQuestionId(0);
+  };
+
+  const handleQuestions = () => {
+    const nextTopicId = topicId || topicInfo[0]?.id;
+    if (!nextTopicId) return;
+    setTopicId(nextTopicId);
+    setQuestionId(0);
+    setStep('questions');
+  };
+
   return (
     <div className="relative min-h-screen selection:bg-gold selection:text-background">
       {/* Global Textures */}
       <div className="texture-overlay" />
       <div className="vignette" />
 
-      <TopBar step={step} onHome={handleHome} onRestart={handleRestart} />
+      <TopBar
+        step={step}
+        onHome={handleHome}
+        onQuestions={handleQuestions}
+        onTopics={handleTopics}
+        onRestart={handleRestart}
+      />
 
       <AnimatePresence mode="wait">
         {step === 'landing' && <Landing key="landing" onBegin={() => setStep('topics')} />}
