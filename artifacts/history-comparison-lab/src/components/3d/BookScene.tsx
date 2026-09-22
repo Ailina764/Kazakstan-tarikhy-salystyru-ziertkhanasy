@@ -3,7 +3,7 @@ import * as THREE from 'three';
 import { GLTFLoader } from 'three/examples/jsm/loaders/GLTFLoader.js';
 import { MeshoptDecoder } from 'three/examples/jsm/libs/meshopt_decoder.module.js';
 
-const BOOK_MODEL_URL = '/assets/models/book-stack.glb';
+const BOOK_MODEL_URL = '/assets/models/books-with-magnifier.glb?v=1';
 
 interface BookSceneProps {
   onReady: () => void;
@@ -94,9 +94,9 @@ export default function BookScene({ onReady, onError }: BookSceneProps) {
         books.position.sub(center);
 
         const modelRoot = new THREE.Group();
-        const scale = 1.4 / Math.max(size.x, size.y, size.z);
+        const scale = 1.9 / Math.max(size.x, size.y, size.z);
         modelRoot.scale.setScalar(scale);
-        books.rotation.y = -0.18;
+        books.rotation.y = Math.PI;
 
         books.traverse((child) => {
           if (child instanceof THREE.Mesh) {
@@ -110,7 +110,10 @@ export default function BookScene({ onReady, onError }: BookSceneProps) {
         readyRef.current();
       },
       undefined,
-      () => errorRef.current(),
+      (error) => {
+        console.error('Books with magnifier model failed to load:', error);
+        errorRef.current();
+      },
     );
 
     const handlePointerMove = (event: PointerEvent) => {
