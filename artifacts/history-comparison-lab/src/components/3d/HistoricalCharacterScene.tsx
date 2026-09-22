@@ -98,7 +98,7 @@ export default function HistoricalCharacterScene({ topicId, onReady, onError }: 
 
     const characterGroup = new THREE.Group();
     const basePositionY = isAktabanMap ? 0.04 : 0.16;
-    characterGroup.position.set(isAktabanMap ? -0.38 : -0.14, basePositionY, 0);
+    characterGroup.position.set(isAktabanMap ? 0 : -0.14, basePositionY, 0);
     scene.add(characterGroup);
 
     const loader = new GLTFLoader();
@@ -115,7 +115,7 @@ export default function HistoricalCharacterScene({ topicId, onReady, onError }: 
         character.position.sub(center);
 
         const modelRoot = new THREE.Group();
-        const scale = (isAktabanMap ? 2.65 : 1.95) / Math.max(size.x, size.y, size.z);
+        const scale = (isAktabanMap ? 2.12 : 1.95) / Math.max(size.x, size.y, size.z);
         modelRoot.scale.set(scale, scale * (isAktabanMap ? 1 : 1.08), scale);
         character.rotation.y = 0;
 
