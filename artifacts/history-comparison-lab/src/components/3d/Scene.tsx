@@ -5,6 +5,7 @@ import HistoricalCharacterScene from './HistoricalCharacterScene';
 const R3fScene = React.lazy(() => import('./R3fScene'));
 const RobotScene = React.lazy(() => import('./RobotScene'));
 const BookScene = React.lazy(() => import('./BookScene'));
+const MODEL_IMAGE_BASE_URL = `${import.meta.env.BASE_URL}assets/images/`;
 
 interface SceneProps {
   id: string;
@@ -19,6 +20,9 @@ export function Scene({ id, className, webglClassName, isAi, topicId }: ScenePro
   const isHistoricalCharacter = (
     id === 'questions-placeholder' || id === 'intro-placeholder'
   ) && (topicId === 'tauke-khan' || topicId === 'abulkhair-khan');
+  const historicalCharacterFallback = topicId === 'abulkhair-khan'
+    ? `${MODEL_IMAGE_BASE_URL}abulkhair-khan-fallback.png`
+    : `${MODEL_IMAGE_BASE_URL}tauke-khan-fallback.png`;
 
   return (
     <div className={`relative w-full h-full flex items-center justify-center overflow-hidden ${className || ''} ${status === 'active' ? webglClassName || '' : ''}`}>
@@ -28,8 +32,12 @@ export function Scene({ id, className, webglClassName, isAi, topicId }: ScenePro
         </div>
       )}
       {isHistoricalCharacter && status === 'error' && (
-        <div className="absolute inset-0 flex items-center justify-center px-8 text-center font-mono text-[10px] uppercase tracking-[0.2em] text-muted-foreground">
-          3D модель жүктелмеді
+        <div className="absolute inset-0 flex items-center justify-center">
+          <img
+            src={historicalCharacterFallback}
+            alt={topicId === 'abulkhair-khan' ? 'Әбілқайыр хан' : 'Тәуке хан'}
+            className="h-full w-full object-contain"
+          />
         </div>
       )}
       {(status === 'loading' || status === 'active') && (
