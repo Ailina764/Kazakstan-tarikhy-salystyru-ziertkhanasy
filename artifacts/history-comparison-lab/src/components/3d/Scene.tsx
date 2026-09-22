@@ -19,10 +19,21 @@ export function Scene({ id, className, webglClassName, isAi, topicId }: ScenePro
   const [status, setStatus] = useState<'loading' | 'active' | 'error'>('loading');
   const isHistoricalCharacter = (
     id === 'questions-placeholder' || id === 'intro-placeholder'
-  ) && (topicId === 'tauke-khan' || topicId === 'abulkhair-khan');
-  const historicalCharacterFallback = topicId === 'abulkhair-khan'
-    ? `${MODEL_IMAGE_BASE_URL}abulkhair-khan-fallback.png`
-    : `${MODEL_IMAGE_BASE_URL}tauke-khan-fallback.png`;
+  ) && (
+    topicId === 'tauke-khan'
+    || topicId === 'abulkhair-khan'
+    || topicId === 'bogenbay-batyr'
+  );
+  const historicalCharacterFallback = topicId === 'bogenbay-batyr'
+    ? `${MODEL_IMAGE_BASE_URL}bogenbay-batyr-fallback.png`
+    : topicId === 'abulkhair-khan'
+      ? `${MODEL_IMAGE_BASE_URL}abulkhair-khan-fallback.png`
+      : `${MODEL_IMAGE_BASE_URL}tauke-khan-fallback.png`;
+  const historicalCharacterName = topicId === 'bogenbay-batyr'
+    ? 'Бөгенбай батыр'
+    : topicId === 'abulkhair-khan'
+      ? 'Әбілқайыр хан'
+      : 'Тәуке хан';
 
   return (
     <div className={`relative w-full h-full flex items-center justify-center overflow-hidden ${className || ''} ${status === 'active' ? webglClassName || '' : ''}`}>
@@ -35,7 +46,7 @@ export function Scene({ id, className, webglClassName, isAi, topicId }: ScenePro
         <div className="absolute inset-0 flex items-center justify-center">
           <img
             src={historicalCharacterFallback}
-            alt={topicId === 'abulkhair-khan' ? 'Әбілқайыр хан' : 'Тәуке хан'}
+            alt={historicalCharacterName}
             className="h-full w-full object-contain"
           />
         </div>

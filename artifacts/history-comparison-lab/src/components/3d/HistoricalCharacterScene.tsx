@@ -6,6 +6,7 @@ import { MeshoptDecoder } from 'three/examples/jsm/libs/meshopt_decoder.module.j
 const MODEL_ASSET_BASE_URL = `${import.meta.env.BASE_URL}assets/models/`;
 const TAUKE_KHAN_MODEL_URL = `${MODEL_ASSET_BASE_URL}tauke-khan.glb?v=royal-costume-1`;
 const ABULKHAIR_KHAN_MODEL_URL = `${MODEL_ASSET_BASE_URL}abulkhair-khan.glb?v=2`;
+const BOGENBAY_BATYR_MODEL_URL = `${MODEL_ASSET_BASE_URL}bogenbay-batyr.glb?v=1`;
 
 interface HistoricalCharacterSceneProps {
   topicId?: string;
@@ -18,8 +19,17 @@ export default function HistoricalCharacterScene({ topicId, onReady, onError }: 
   const readyRef = useRef(onReady);
   const errorRef = useRef(onError);
   const isAbulkhair = topicId === 'abulkhair-khan';
-  const modelUrl = isAbulkhair ? ABULKHAIR_KHAN_MODEL_URL : TAUKE_KHAN_MODEL_URL;
-  const characterName = isAbulkhair ? 'Әбілқайыр хан' : 'Тәуке хан';
+  const isBogenbay = topicId === 'bogenbay-batyr';
+  const modelUrl = isBogenbay
+    ? BOGENBAY_BATYR_MODEL_URL
+    : isAbulkhair
+      ? ABULKHAIR_KHAN_MODEL_URL
+      : TAUKE_KHAN_MODEL_URL;
+  const characterName = isBogenbay
+    ? 'Бөгенбай батыр'
+    : isAbulkhair
+      ? 'Әбілқайыр хан'
+      : 'Тәуке хан';
 
   useEffect(() => {
     readyRef.current = onReady;

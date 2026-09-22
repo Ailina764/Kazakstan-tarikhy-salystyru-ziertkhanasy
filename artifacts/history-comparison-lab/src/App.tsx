@@ -22,7 +22,11 @@ const pageVariants: Variants = {
 function ArchivalPlaceholder({ topicId, isAi = false, id }: { topicId: string, isAi?: boolean, id: string }) {
   const isHistoricalCharacter = (
     id === 'questions-placeholder' || id === 'intro-placeholder'
-  ) && (topicId === 'tauke-khan' || topicId === 'abulkhair-khan');
+  ) && (
+    topicId === 'tauke-khan'
+    || topicId === 'abulkhair-khan'
+    || topicId === 'bogenbay-batyr'
+  );
 
   return (
     <div className={`relative w-full h-[400px] lg:h-[600px] flex items-center justify-center overflow-hidden group ${
