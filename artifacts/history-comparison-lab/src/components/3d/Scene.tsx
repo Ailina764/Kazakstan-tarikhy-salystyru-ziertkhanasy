@@ -17,6 +17,8 @@ interface SceneProps {
 
 export function Scene({ id, className, webglClassName, isAi, topicId }: SceneProps) {
   const [status, setStatus] = useState<'loading' | 'active' | 'error'>('loading');
+  const isBookScene = id === 'source-answer-scene' && !isAi;
+  const bookFallback = `${MODEL_IMAGE_BASE_URL}medieval-open-book-fallback.png?v=transparent-1`;
   const isHistoricalCharacter = (
     id === 'questions-placeholder' || id === 'intro-placeholder'
   ) && (
@@ -65,6 +67,15 @@ export function Scene({ id, className, webglClassName, isAi, topicId }: ScenePro
             src={historicalCharacterFallback}
             alt={historicalCharacterName}
             className={historicalImageClassName}
+          />
+        </div>
+      )}
+      {isBookScene && (status === 'loading' || status === 'error') && (
+        <div className="absolute inset-0 flex items-center justify-center">
+          <img
+            src={bookFallback}
+            alt="Ашық тарихи кітап"
+            className="h-full w-full object-contain"
           />
         </div>
       )}

@@ -3,7 +3,7 @@ import * as THREE from 'three';
 import { GLTFLoader } from 'three/examples/jsm/loaders/GLTFLoader.js';
 import { MeshoptDecoder } from 'three/examples/jsm/libs/meshopt_decoder.module.js';
 
-const BOOK_MODEL_URL = '/assets/models/medieval-open-book.glb?v=1';
+const BOOK_MODEL_URL = `${import.meta.env.BASE_URL}assets/models/medieval-open-book.glb?v=fast-2`;
 
 interface BookSceneProps {
   onReady: () => void;
@@ -35,22 +35,14 @@ export default function BookScene({ onReady, onError }: BookSceneProps) {
     camera.position.set(0, 0.15, 4.6);
 
     try {
-      const probe = document.createElement('canvas');
-      const canUseWebGL = Boolean(
-        window.WebGLRenderingContext
-        && (probe.getContext('webgl2') || probe.getContext('webgl')),
-      );
-      if (!canUseWebGL) {
-        errorRef.current();
-        return;
-      }
-
       renderer = new THREE.WebGLRenderer({
         alpha: true,
         antialias: true,
-        powerPreference: 'high-performance',
+        powerPreference: 'default',
+        failIfMajorPerformanceCaveat: false,
       });
-    } catch {
+    } catch (error) {
+      console.error('Medieval open book WebGL renderer failed to start:', error);
       errorRef.current();
       return;
     }
