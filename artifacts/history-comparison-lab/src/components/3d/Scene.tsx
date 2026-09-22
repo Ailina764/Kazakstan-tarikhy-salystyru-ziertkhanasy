@@ -44,12 +44,19 @@ export function Scene({ id, className, webglClassName, isAi, topicId }: ScenePro
     : topicId === 'abulkhair-khan'
       ? 'Әбілқайыр хан'
       : 'Тәуке хан';
+  const historicalImageClassName = `h-full w-full object-contain ${
+    topicId === 'aktaban-shubyryndi' ? 'scale-[0.82] -translate-x-8' : ''
+  }`;
 
   return (
     <div className={`relative w-full h-full flex items-center justify-center overflow-hidden ${className || ''} ${status === 'active' ? webglClassName || '' : ''}`}>
       {isHistoricalCharacter && status === 'loading' && (
-        <div className="absolute inset-0 flex items-center justify-center font-mono text-[10px] uppercase tracking-[0.24em] text-muted-foreground">
-          3D модель жүктелуде...
+        <div className="absolute inset-0 flex items-center justify-center">
+          <img
+            src={historicalCharacterFallback}
+            alt={historicalCharacterName}
+            className={historicalImageClassName}
+          />
         </div>
       )}
       {isHistoricalCharacter && status === 'error' && (
@@ -57,9 +64,7 @@ export function Scene({ id, className, webglClassName, isAi, topicId }: ScenePro
           <img
             src={historicalCharacterFallback}
             alt={historicalCharacterName}
-            className={`h-full w-full object-contain ${
-              topicId === 'aktaban-shubyryndi' ? 'scale-[0.82] -translate-x-8' : ''
-            }`}
+            className={historicalImageClassName}
           />
         </div>
       )}

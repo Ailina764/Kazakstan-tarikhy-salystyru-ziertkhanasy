@@ -1,3 +1,3 @@
 - [Blender headless rendering](blender-headless-rendering.md) — use Cycles CPU for GLB fallback renders because Eevee and Workbench require unavailable GLX/EGL.
 - [WebGL character fallback](webgl-character-fallback.md) — avoid a separate WebGL probe; initialize Three.js directly and retain character posters for unsupported devices.
-- [Historical 3D asset budget](historical-3d-asset-budget.md) — web GLBs should use about 100k faces and 1024px textures to keep topic transitions responsive.
+- [Historical 3D asset budget](historical-3d-asset-budget.md) — web GLBs should use about 70k faces and 512px textures, with an instant poster during loading.

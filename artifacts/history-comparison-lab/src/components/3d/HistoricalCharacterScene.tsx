@@ -4,11 +4,11 @@ import { GLTFLoader } from 'three/examples/jsm/loaders/GLTFLoader.js';
 import { MeshoptDecoder } from 'three/examples/jsm/libs/meshopt_decoder.module.js';
 
 const MODEL_ASSET_BASE_URL = `${import.meta.env.BASE_URL}assets/models/`;
-const TAUKE_KHAN_MODEL_URL = `${MODEL_ASSET_BASE_URL}tauke-khan.glb?v=fast-2`;
-const AKTABAN_MAP_MODEL_URL = `${MODEL_ASSET_BASE_URL}aktaban-map.glb?v=fast-2`;
-const ABULKHAIR_KHAN_MODEL_URL = `${MODEL_ASSET_BASE_URL}abulkhair-khan.glb?v=fast-3`;
-const BOGENBAY_BATYR_MODEL_URL = `${MODEL_ASSET_BASE_URL}bogenbay-batyr.glb?v=fast-2`;
-const BUKHAR_ZHYRAU_MODEL_URL = `${MODEL_ASSET_BASE_URL}bukhar-zhyrau.glb?v=fast-2`;
+const TAUKE_KHAN_MODEL_URL = `${MODEL_ASSET_BASE_URL}tauke-khan.glb?v=faster-3`;
+const AKTABAN_MAP_MODEL_URL = `${MODEL_ASSET_BASE_URL}aktaban-map.glb?v=faster-3`;
+const ABULKHAIR_KHAN_MODEL_URL = `${MODEL_ASSET_BASE_URL}abulkhair-khan.glb?v=faster-4`;
+const BOGENBAY_BATYR_MODEL_URL = `${MODEL_ASSET_BASE_URL}bogenbay-batyr.glb?v=faster-3`;
+const BUKHAR_ZHYRAU_MODEL_URL = `${MODEL_ASSET_BASE_URL}bukhar-zhyrau.glb?v=faster-3`;
 
 interface HistoricalCharacterSceneProps {
   topicId?: string;
