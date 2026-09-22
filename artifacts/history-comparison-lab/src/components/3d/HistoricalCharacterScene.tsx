@@ -7,6 +7,7 @@ const MODEL_ASSET_BASE_URL = `${import.meta.env.BASE_URL}assets/models/`;
 const TAUKE_KHAN_MODEL_URL = `${MODEL_ASSET_BASE_URL}tauke-khan.glb?v=royal-costume-1`;
 const ABULKHAIR_KHAN_MODEL_URL = `${MODEL_ASSET_BASE_URL}abulkhair-khan.glb?v=2`;
 const BOGENBAY_BATYR_MODEL_URL = `${MODEL_ASSET_BASE_URL}bogenbay-batyr.glb?v=1`;
+const BUKHAR_ZHYRAU_MODEL_URL = `${MODEL_ASSET_BASE_URL}bukhar-zhyrau.glb?v=1`;
 
 interface HistoricalCharacterSceneProps {
   topicId?: string;
@@ -20,12 +21,17 @@ export default function HistoricalCharacterScene({ topicId, onReady, onError }: 
   const errorRef = useRef(onError);
   const isAbulkhair = topicId === 'abulkhair-khan';
   const isBogenbay = topicId === 'bogenbay-batyr';
-  const modelUrl = isBogenbay
+  const isBukhar = topicId === 'bukhar-zhyrau';
+  const modelUrl = isBukhar
+    ? BUKHAR_ZHYRAU_MODEL_URL
+    : isBogenbay
     ? BOGENBAY_BATYR_MODEL_URL
     : isAbulkhair
       ? ABULKHAIR_KHAN_MODEL_URL
       : TAUKE_KHAN_MODEL_URL;
-  const characterName = isBogenbay
+  const characterName = isBukhar
+    ? 'Бұқар жырау'
+    : isBogenbay
     ? 'Бөгенбай батыр'
     : isAbulkhair
       ? 'Әбілқайыр хан'

@@ -23,13 +23,18 @@ export function Scene({ id, className, webglClassName, isAi, topicId }: ScenePro
     topicId === 'tauke-khan'
     || topicId === 'abulkhair-khan'
     || topicId === 'bogenbay-batyr'
+    || topicId === 'bukhar-zhyrau'
   );
-  const historicalCharacterFallback = topicId === 'bogenbay-batyr'
+  const historicalCharacterFallback = topicId === 'bukhar-zhyrau'
+    ? `${MODEL_IMAGE_BASE_URL}bukhar-zhyrau-fallback.png`
+    : topicId === 'bogenbay-batyr'
     ? `${MODEL_IMAGE_BASE_URL}bogenbay-batyr-fallback.png`
     : topicId === 'abulkhair-khan'
       ? `${MODEL_IMAGE_BASE_URL}abulkhair-khan-fallback.png`
       : `${MODEL_IMAGE_BASE_URL}tauke-khan-fallback.png`;
-  const historicalCharacterName = topicId === 'bogenbay-batyr'
+  const historicalCharacterName = topicId === 'bukhar-zhyrau'
+    ? 'Бұқар жырау'
+    : topicId === 'bogenbay-batyr'
     ? 'Бөгенбай батыр'
     : topicId === 'abulkhair-khan'
       ? 'Әбілқайыр хан'

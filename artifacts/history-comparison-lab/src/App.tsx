@@ -26,6 +26,7 @@ function ArchivalPlaceholder({ topicId, isAi = false, id }: { topicId: string, i
     topicId === 'tauke-khan'
     || topicId === 'abulkhair-khan'
     || topicId === 'bogenbay-batyr'
+    || topicId === 'bukhar-zhyrau'
   );
 
   return (
