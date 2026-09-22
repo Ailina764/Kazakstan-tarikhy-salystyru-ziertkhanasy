@@ -3,7 +3,7 @@ import * as THREE from 'three';
 import { GLTFLoader } from 'three/examples/jsm/loaders/GLTFLoader.js';
 import { MeshoptDecoder } from 'three/examples/jsm/libs/meshopt_decoder.module.js';
 
-const BOOK_MODEL_URL = '/assets/models/books-with-magnifier.glb?v=1';
+const BOOK_MODEL_URL = '/assets/models/medieval-open-book.glb?v=1';
 
 interface BookSceneProps {
   onReady: () => void;
@@ -94,9 +94,9 @@ export default function BookScene({ onReady, onError }: BookSceneProps) {
         books.position.sub(center);
 
         const modelRoot = new THREE.Group();
-        const scale = 1.9 / Math.max(size.x, size.y, size.z);
+        const scale = 2 / Math.max(size.x, size.y, size.z);
         modelRoot.scale.setScalar(scale);
-        books.rotation.y = Math.PI;
+        books.rotation.y = 0;
 
         books.traverse((child) => {
           if (child instanceof THREE.Mesh) {
@@ -111,7 +111,7 @@ export default function BookScene({ onReady, onError }: BookSceneProps) {
       },
       undefined,
       (error) => {
-        console.error('Books with magnifier model failed to load:', error);
+        console.error('Medieval open book model failed to load:', error);
         errorRef.current();
       },
     );
