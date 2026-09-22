@@ -4,7 +4,7 @@ import { GLTFLoader } from 'three/examples/jsm/loaders/GLTFLoader.js';
 import { MeshoptDecoder } from 'three/examples/jsm/libs/meshopt_decoder.module.js';
 
 const TAUKE_KHAN_MODEL_URL = '/assets/models/tauke-khan.glb?v=royal-costume-1';
-const ABULKHAIR_KHAN_MODEL_URL = '/assets/models/abulkhair-khan.glb?v=1';
+const ABULKHAIR_KHAN_MODEL_URL = '/assets/models/abulkhair-khan.glb?v=2';
 
 interface HistoricalCharacterSceneProps {
   topicId?: string;
