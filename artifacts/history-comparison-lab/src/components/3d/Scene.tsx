@@ -27,14 +27,14 @@ export function Scene({ id, className, webglClassName, isAi, topicId }: ScenePro
     || topicId === 'bukhar-zhyrau'
   );
   const historicalCharacterFallback = topicId === 'aktaban-shubyryndi'
-    ? `${MODEL_IMAGE_BASE_URL}aktaban-map-fallback.png`
+    ? `${MODEL_IMAGE_BASE_URL}aktaban-map-fallback.png?v=transparent-2`
     : topicId === 'bukhar-zhyrau'
-    ? `${MODEL_IMAGE_BASE_URL}bukhar-zhyrau-fallback.png`
+    ? `${MODEL_IMAGE_BASE_URL}bukhar-zhyrau-fallback.png?v=transparent-2`
     : topicId === 'bogenbay-batyr'
-    ? `${MODEL_IMAGE_BASE_URL}bogenbay-batyr-fallback.png`
+    ? `${MODEL_IMAGE_BASE_URL}bogenbay-batyr-fallback.png?v=transparent-2`
     : topicId === 'abulkhair-khan'
-      ? `${MODEL_IMAGE_BASE_URL}abulkhair-khan-fallback.png`
-      : `${MODEL_IMAGE_BASE_URL}tauke-khan-fallback.png`;
+      ? `${MODEL_IMAGE_BASE_URL}abulkhair-khan-fallback.png?v=transparent-2`
+      : `${MODEL_IMAGE_BASE_URL}tauke-khan-fallback.png?v=transparent-2`;
   const historicalCharacterName = topicId === 'aktaban-shubyryndi'
     ? 'Ақтабан шұбырынды картасы'
     : topicId === 'bukhar-zhyrau'
