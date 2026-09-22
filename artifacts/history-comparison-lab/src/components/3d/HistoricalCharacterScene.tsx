@@ -77,7 +77,7 @@ export default function HistoricalCharacterScene({ onReady, onError }: Historica
     scene.add(warmLight);
 
     const characterGroup = new THREE.Group();
-    characterGroup.position.set(0, -0.02, 0);
+    characterGroup.position.set(-0.14, 0.04, 0);
     scene.add(characterGroup);
 
     const loader = new GLTFLoader();
@@ -94,7 +94,7 @@ export default function HistoricalCharacterScene({ onReady, onError }: Historica
         character.position.sub(center);
 
         const modelRoot = new THREE.Group();
-        const scale = 2.25 / Math.max(size.x, size.y, size.z);
+        const scale = 1.95 / Math.max(size.x, size.y, size.z);
         modelRoot.scale.setScalar(scale);
         character.rotation.y = 0;
 
@@ -148,7 +148,7 @@ export default function HistoricalCharacterScene({ onReady, onError }: Historica
 
       characterGroup.rotation.y += ((pointer.x * 0.22) - characterGroup.rotation.y) * 0.04;
       characterGroup.rotation.x += ((-pointer.y * 0.075) - characterGroup.rotation.x) * 0.04;
-      characterGroup.position.y = -0.02 + Math.sin(elapsed * 0.48) * 0.025;
+      characterGroup.position.y = 0.04 + Math.sin(elapsed * 0.48) * 0.025;
       renderer?.render(scene, camera);
     };
     animate();
@@ -172,5 +172,15 @@ export default function HistoricalCharacterScene({ onReady, onError }: Historica
     };
   }, []);
 
-  return <div ref={containerRef} className="absolute inset-0" aria-label="Тәуке ханның интерактивті 3D моделі" />;
+  return (
+    <div
+      ref={containerRef}
+      className="absolute inset-0"
+      style={{
+        maskImage: 'linear-gradient(to bottom, black 0%, black 82%, transparent 100%)',
+        WebkitMaskImage: 'linear-gradient(to bottom, black 0%, black 82%, transparent 100%)',
+      }}
+      aria-label="Тәуке ханның интерактивті 3D моделі"
+    />
+  );
 }

@@ -16,7 +16,9 @@ interface SceneProps {
 
 export function Scene({ id, className, webglClassName, isAi, topicId }: SceneProps) {
   const [status, setStatus] = useState<'loading' | 'active' | 'error'>('loading');
-  const isTaukeCharacter = id === 'questions-placeholder' && topicId === 'tauke-khan';
+  const isTaukeCharacter = (
+    id === 'questions-placeholder' || id === 'intro-placeholder'
+  ) && topicId === 'tauke-khan';
 
   return (
     <div className={`relative w-full h-full flex items-center justify-center overflow-hidden ${className || ''} ${status === 'active' ? webglClassName || '' : ''}`}>

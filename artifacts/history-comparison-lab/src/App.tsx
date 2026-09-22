@@ -20,7 +20,9 @@ const pageVariants: Variants = {
 // --- Subcomponents ---
 
 function ArchivalPlaceholder({ topicId, isAi = false, id }: { topicId: string, isAi?: boolean, id: string }) {
-  const isTaukeCharacter = id === 'questions-placeholder' && topicId === 'tauke-khan';
+  const isTaukeCharacter = (
+    id === 'questions-placeholder' || id === 'intro-placeholder'
+  ) && topicId === 'tauke-khan';
 
   return (
     <div className={`relative w-full h-[400px] lg:h-[600px] flex items-center justify-center overflow-hidden group ${
