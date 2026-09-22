@@ -381,9 +381,15 @@ function SourceAnswer({ item, source, onNext, onBack }: { item: ComparisonData; 
           </p>
         </div>
 
-        <div className="grid lg:grid-cols-[1fr_400px] gap-12 flex-1">
+        <div
+          className={`grid flex-1 ${
+            isAi
+              ? 'lg:grid-cols-[1fr_400px] gap-12'
+              : 'lg:grid-cols-[minmax(0,1fr)_500px] gap-8'
+          }`}
+        >
           <div className="flex flex-col">
-            <div className={`flex-1 rounded-3xl p-10 lg:p-16 mb-8 border ${isAi ? 'ai-panel' : 'history-panel'}`}>
+            <div className={`flex-1 rounded-3xl p-10 ${isAi ? 'lg:p-16 ai-panel' : 'lg:p-12 history-panel'} mb-8 border`}>
               <div className="flex items-center justify-between mb-12 border-b border-current/10 pb-8">
                  <div className="flex items-center gap-4">
                     <div className={`w-12 h-12 rounded-full flex items-center justify-center ${isAi ? 'bg-[#4A6D7C]/20 text-[#4A6D7C]' : 'bg-[#8C3A2B]/20 text-[#8C3A2B]'}`}>
