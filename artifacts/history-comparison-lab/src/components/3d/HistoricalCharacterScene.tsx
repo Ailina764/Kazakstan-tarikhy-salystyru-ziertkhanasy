@@ -3,7 +3,7 @@ import * as THREE from 'three';
 import { GLTFLoader } from 'three/examples/jsm/loaders/GLTFLoader.js';
 import { MeshoptDecoder } from 'three/examples/jsm/libs/meshopt_decoder.module.js';
 
-const TAUKE_KHAN_MODEL_URL = '/assets/models/tauke-khan.glb';
+const TAUKE_KHAN_MODEL_URL = '/assets/models/tauke-khan.glb?v=optimized-1';
 
 interface HistoricalCharacterSceneProps {
   onReady: () => void;
@@ -96,7 +96,7 @@ export default function HistoricalCharacterScene({ onReady, onError }: Historica
         const modelRoot = new THREE.Group();
         const scale = 2.25 / Math.max(size.x, size.y, size.z);
         modelRoot.scale.setScalar(scale);
-        character.rotation.y = -Math.PI / 2;
+        character.rotation.y = Math.PI / 2;
 
         character.traverse((child) => {
           if (child instanceof THREE.Mesh) {
@@ -110,7 +110,10 @@ export default function HistoricalCharacterScene({ onReady, onError }: Historica
         readyRef.current();
       },
       undefined,
-      () => errorRef.current(),
+      (error) => {
+        console.error('Tauke Khan model failed to load:', error);
+        errorRef.current();
+      },
     );
 
     const handlePointerMove = (event: PointerEvent) => {
