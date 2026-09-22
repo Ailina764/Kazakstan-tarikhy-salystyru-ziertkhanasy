@@ -98,7 +98,7 @@ export default function HistoricalCharacterScene({ topicId, onReady, onError }: 
 
     const characterGroup = new THREE.Group();
     const basePositionY = isAktabanMap ? 0.04 : 0.16;
-    characterGroup.position.set(isAktabanMap ? 0 : -0.14, basePositionY, 0);
+    characterGroup.position.set(isAktabanMap ? -0.38 : -0.14, basePositionY, 0);
     scene.add(characterGroup);
 
     const loader = new GLTFLoader();

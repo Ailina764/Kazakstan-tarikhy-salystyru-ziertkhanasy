@@ -57,7 +57,9 @@ export function Scene({ id, className, webglClassName, isAi, topicId }: ScenePro
           <img
             src={historicalCharacterFallback}
             alt={historicalCharacterName}
-            className="h-full w-full object-contain"
+            className={`h-full w-full object-contain ${
+              topicId === 'aktaban-shubyryndi' ? '-translate-x-14 lg:-translate-x-20' : ''
+            }`}
           />
         </div>
       )}
