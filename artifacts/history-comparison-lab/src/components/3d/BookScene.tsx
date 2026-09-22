@@ -77,7 +77,7 @@ export default function BookScene({ onReady, onError }: BookSceneProps) {
     scene.add(warmLight);
 
     const bookGroup = new THREE.Group();
-    bookGroup.position.set(0, 0.05, 0);
+    bookGroup.position.set(-0.2, 0.22, 0);
     scene.add(bookGroup);
 
     const loader = new GLTFLoader();
@@ -95,7 +95,7 @@ export default function BookScene({ onReady, onError }: BookSceneProps) {
 
         const modelRoot = new THREE.Group();
         const scale = 1.25 / Math.max(size.x, size.y, size.z);
-        modelRoot.scale.setScalar(scale);
+        modelRoot.scale.set(scale, scale * 1.18, scale);
         books.rotation.y = 0;
 
         books.traverse((child) => {
@@ -143,7 +143,7 @@ export default function BookScene({ onReady, onError }: BookSceneProps) {
 
       bookGroup.rotation.y += ((pointer.x * 0.22) - bookGroup.rotation.y) * 0.035;
       bookGroup.rotation.x += ((-pointer.y * 0.08) - bookGroup.rotation.x) * 0.035;
-      bookGroup.position.y = 0.05 + Math.sin(elapsed * 0.55) * 0.035;
+      bookGroup.position.y = 0.22 + Math.sin(elapsed * 0.55) * 0.035;
       renderer?.render(scene, camera);
     };
     animate();
