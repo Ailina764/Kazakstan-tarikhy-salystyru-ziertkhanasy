@@ -77,7 +77,7 @@ export default function HistoricalCharacterScene({ onReady, onError }: Historica
     scene.add(warmLight);
 
     const characterGroup = new THREE.Group();
-    characterGroup.position.set(-0.14, 0.04, 0);
+    characterGroup.position.set(-0.14, 0.16, 0);
     scene.add(characterGroup);
 
     const loader = new GLTFLoader();
@@ -95,7 +95,7 @@ export default function HistoricalCharacterScene({ onReady, onError }: Historica
 
         const modelRoot = new THREE.Group();
         const scale = 1.95 / Math.max(size.x, size.y, size.z);
-        modelRoot.scale.setScalar(scale);
+        modelRoot.scale.set(scale, scale * 1.08, scale);
         character.rotation.y = 0;
 
         character.traverse((child) => {
@@ -148,7 +148,7 @@ export default function HistoricalCharacterScene({ onReady, onError }: Historica
 
       characterGroup.rotation.y += ((pointer.x * 0.22) - characterGroup.rotation.y) * 0.04;
       characterGroup.rotation.x += ((-pointer.y * 0.075) - characterGroup.rotation.x) * 0.04;
-      characterGroup.position.y = 0.04 + Math.sin(elapsed * 0.48) * 0.025;
+      characterGroup.position.y = 0.16 + Math.sin(elapsed * 0.48) * 0.025;
       renderer?.render(scene, camera);
     };
     animate();
