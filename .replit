@@ -22,3 +22,7 @@ timeoutMs = 20000
 [nix]
 channel = "stable-25_05"
 packages = ["blender"]
+
+[[ports]]
+localPort = 24735
+externalPort = 80

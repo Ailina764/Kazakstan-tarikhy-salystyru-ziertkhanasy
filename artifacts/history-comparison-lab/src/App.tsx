@@ -20,15 +20,23 @@ const pageVariants: Variants = {
 // --- Subcomponents ---
 
 function ArchivalPlaceholder({ topicId, isAi = false, id }: { topicId: string, isAi?: boolean, id: string }) {
+  const isTaukeCharacter = id === 'questions-placeholder' && topicId === 'tauke-khan';
+
   return (
-    <div className="relative w-full h-[400px] lg:h-[600px] flex items-center justify-center cinematic-border bg-black/5 dark:bg-white/5 backdrop-blur-sm p-4 rounded-lg overflow-hidden group">
+    <div className={`relative w-full h-[400px] lg:h-[600px] flex items-center justify-center overflow-hidden group ${
+      isTaukeCharacter
+        ? 'bg-transparent'
+        : 'cinematic-border bg-black/5 dark:bg-white/5 backdrop-blur-sm p-4 rounded-lg'
+    }`}>
       <div className="absolute inset-0 z-0">
          <Scene id={id} isAi={isAi} topicId={topicId} />
       </div>
-      <div className="absolute bottom-4 left-4 right-4 z-10 flex items-center justify-between pointer-events-none opacity-50 group-hover:opacity-100 transition-opacity">
-        <span className="font-mono text-[10px] uppercase tracking-widest text-foreground">{isAi ? 'Жасанды Интеллект' : '3D Нысан'}</span>
-        <span className="font-mono text-[10px] uppercase tracking-widest text-foreground">Интерактивті</span>
-      </div>
+      {!isTaukeCharacter && (
+        <div className="absolute bottom-4 left-4 right-4 z-10 flex items-center justify-between pointer-events-none opacity-50 group-hover:opacity-100 transition-opacity">
+          <span className="font-mono text-[10px] uppercase tracking-widest text-foreground">{isAi ? 'Жасанды Интеллект' : '3D Нысан'}</span>
+          <span className="font-mono text-[10px] uppercase tracking-widest text-foreground">Интерактивті</span>
+        </div>
+      )}
     </div>
   );
 }
