@@ -77,7 +77,7 @@ export default function BookScene({ onReady, onError }: BookSceneProps) {
     scene.add(warmLight);
 
     const bookGroup = new THREE.Group();
-    bookGroup.position.set(-0.2, 0.22, 0);
+    bookGroup.position.set(-0.2, 0.48, 0);
     scene.add(bookGroup);
 
     const loader = new GLTFLoader();
@@ -143,7 +143,7 @@ export default function BookScene({ onReady, onError }: BookSceneProps) {
 
       bookGroup.rotation.y += ((pointer.x * 0.22) - bookGroup.rotation.y) * 0.035;
       bookGroup.rotation.x += ((-pointer.y * 0.08) - bookGroup.rotation.x) * 0.035;
-      bookGroup.position.y = 0.22 + Math.sin(elapsed * 0.55) * 0.035;
+      bookGroup.position.y = 0.48 + Math.sin(elapsed * 0.55) * 0.035;
       renderer?.render(scene, camera);
     };
     animate();
