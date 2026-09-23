@@ -17,6 +17,35 @@ const pageVariants: Variants = {
   exit: { opacity: 0, y: -20, transition: { duration: 0.4 } }
 };
 
+const answerListVariants: Variants = {
+  hidden: {},
+  visible: {
+    transition: {
+      delayChildren: 0.32,
+      staggerChildren: 0.16,
+    },
+  },
+};
+
+const answerItemVariants: Variants = {
+  hidden: {
+    opacity: 0,
+    x: -18,
+    y: 8,
+    filter: 'blur(5px)',
+  },
+  visible: {
+    opacity: 1,
+    x: 0,
+    y: 0,
+    filter: 'blur(0px)',
+    transition: {
+      duration: 0.55,
+      ease: [0.16, 1, 0.3, 1] as const,
+    },
+  },
+};
+
 // --- Subcomponents ---
 
 function ArchivalPlaceholder({ topicId, isAi = false, id }: { topicId: string, isAi?: boolean, id: string }) {
@@ -465,16 +494,30 @@ function SourceAnswer({ item, source, onNext, onBack }: { item: ComparisonData; 
                     ? "Бұл сұраққа қатысты негізгі тарихи жағдайлар мен себептерді төмендегідей жүйелеуге болады:"
                     : "Бұл кезеңнің тарихи алғышарттары мен негізгі факторлары оқулықта келесідей берілген:"}
                 </p>
-                <ul className="space-y-6">
+                <motion.ul
+                  className="space-y-6"
+                  variants={answerListVariants}
+                  initial="hidden"
+                  animate="visible"
+                >
                   {points.map((point, index) => (
-                    <li key={index} className="flex gap-6 items-start">
-                      <span className={`flex-shrink-0 w-8 h-8 rounded-full flex items-center justify-center font-serif text-sm border ${isAi ? 'border-[#4A6D7C] text-[#4A6D7C]' : 'border-[#8C3A2B] text-[#8C3A2B]'}`}>
+                    <motion.li
+                      key={`${source}-${index}`}
+                      variants={answerItemVariants}
+                      className="group flex items-start gap-6"
+                    >
+                      <motion.span
+                        className={`flex h-8 w-8 flex-shrink-0 items-center justify-center rounded-full border font-serif text-sm transition-colors duration-300 group-hover:bg-current/5 ${isAi ? 'border-[#4A6D7C] text-[#4A6D7C]' : 'border-[#8C3A2B] text-[#8C3A2B]'}`}
+                        initial={{ scale: 0.72 }}
+                        animate={{ scale: 1 }}
+                        transition={{ duration: 0.45, delay: 0.32 + index * 0.16, ease: [0.16, 1, 0.3, 1] }}
+                      >
                         {index + 1}
-                      </span>
+                      </motion.span>
                       <span className="font-sans text-lg leading-relaxed text-foreground">{point}</span>
-                    </li>
+                    </motion.li>
                   ))}
-                </ul>
+                </motion.ul>
               </div>
             </div>
 
