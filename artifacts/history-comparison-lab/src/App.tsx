@@ -1,6 +1,6 @@
 import React, { useState, useEffect, type ReactNode } from 'react';
 import {
-  ArrowLeft, ArrowRight, BookOpen, Check, ChevronRight, Cpu, History, Home, Layers3, Lightbulb, ListChecks, RotateCcw, SearchCheck, ShieldCheck, ScrollText, Landmark, Feather, Info
+  ArrowLeft, ArrowRight, BookOpen, Check, ChevronRight, Cpu, History, Home, Layers3, Lightbulb, ListChecks, RotateCcw, SearchCheck, ShieldCheck, ScrollText, Landmark, Feather, Info, Sparkles
 } from 'lucide-react';
 import { questionsData, topicInfo, type ComparisonData } from './data';
 import { Scene } from './components/3d/Scene';
@@ -45,6 +45,17 @@ const answerItemVariants: Variants = {
     },
   },
 };
+
+const completionParticles = [
+  { x: -150, y: 12, delay: 0.05, size: 6 },
+  { x: -112, y: -42, delay: 0.18, size: 4 },
+  { x: -72, y: 35, delay: 0.32, size: 5 },
+  { x: -34, y: -68, delay: 0.12, size: 7 },
+  { x: 18, y: -76, delay: 0.28, size: 4 },
+  { x: 58, y: 38, delay: 0.08, size: 6 },
+  { x: 96, y: -36, delay: 0.24, size: 5 },
+  { x: 142, y: 16, delay: 0.38, size: 7 },
+];
 
 // --- Subcomponents ---
 
@@ -713,26 +724,123 @@ function Comparison({ item, onNext, onBack }: { item: ComparisonData; onNext: ()
 
 function Final({ item, onHome }: { item: ComparisonData; onHome: () => void }) {
   return (
-    <motion.div variants={pageVariants} initial="initial" animate="animate" exit="exit" className="min-h-screen pt-[160px] pb-24 px-6 flex items-center">
-      <main className="mx-auto max-w-[800px] w-full text-center">
-        <div className="w-24 h-24 mx-auto rounded-full bg-gold/20 text-gold flex items-center justify-center mb-12">
-          <Check size={40} strokeWidth={3} />
+    <motion.div variants={pageVariants} initial="initial" animate="animate" exit="exit" className="relative flex min-h-screen items-center overflow-hidden px-6 pb-24 pt-[140px]">
+      <div className="pointer-events-none absolute inset-0" aria-hidden="true">
+        <motion.div
+          className="absolute left-1/2 top-[37%] h-[520px] w-[520px] -translate-x-1/2 -translate-y-1/2 rounded-full border border-gold/10"
+          initial={{ scale: 0.55, opacity: 0 }}
+          animate={{ scale: 1, opacity: 1 }}
+          transition={{ duration: 1.4, ease: [0.16, 1, 0.3, 1] }}
+        />
+        <motion.div
+          className="absolute left-1/2 top-[37%] h-[390px] w-[390px] -translate-x-1/2 -translate-y-1/2 rounded-full border border-dashed border-gold/15"
+          initial={{ rotate: -45, opacity: 0 }}
+          animate={{ rotate: 45, opacity: 1 }}
+          transition={{ duration: 2.4, delay: 0.15, ease: [0.16, 1, 0.3, 1] }}
+        />
+      </div>
+
+      <main className="relative z-10 mx-auto w-full max-w-[860px] text-center">
+        <div className="relative mx-auto mb-10 flex h-36 w-80 items-center justify-center" aria-hidden="true">
+          {completionParticles.map((particle, index) => (
+            <motion.span
+              key={index}
+              className="absolute rotate-45 rounded-[1px] bg-gold"
+              style={{
+                width: particle.size,
+                height: particle.size,
+                x: particle.x,
+                y: particle.y,
+              }}
+              initial={{ opacity: 0, scale: 0, y: particle.y + 28 }}
+              animate={{
+                opacity: [0, 0.9, 0],
+                scale: [0.4, 1, 0.65],
+                y: particle.y - 34,
+                rotate: [45, 135],
+              }}
+              transition={{
+                duration: 1.7,
+                delay: 0.35 + particle.delay,
+                ease: [0.16, 1, 0.3, 1],
+              }}
+            />
+          ))}
+
+          <motion.div
+            className="absolute flex h-32 w-32 items-center justify-center rounded-full border border-gold/40"
+            initial={{ opacity: 0, scale: 0.45, rotate: -90 }}
+            animate={{ opacity: 1, scale: 1, rotate: 0 }}
+            transition={{ duration: 0.9, delay: 0.12, ease: [0.16, 1, 0.3, 1] }}
+          >
+            <motion.div
+              className="absolute inset-2 rounded-full border border-dashed border-gold/50"
+              animate={{ rotate: 360 }}
+              transition={{ duration: 18, ease: 'linear', repeat: Infinity }}
+            />
+            <motion.div
+              className="flex h-24 w-24 items-center justify-center rounded-full bg-gold/20 text-gold shadow-[0_0_45px_rgba(175,127,57,0.2)]"
+              initial={{ scale: 0 }}
+              animate={{ scale: 1 }}
+              transition={{ type: 'spring', stiffness: 210, damping: 16, delay: 0.42 }}
+            >
+              <motion.div
+                initial={{ opacity: 0, scale: 0.5, rotate: -18 }}
+                animate={{ opacity: 1, scale: 1, rotate: 0 }}
+                transition={{ type: 'spring', stiffness: 260, damping: 15, delay: 0.68 }}
+              >
+                <Check size={42} strokeWidth={3} />
+              </motion.div>
+            </motion.div>
+          </motion.div>
         </div>
-        
-        <h1 className="font-serif text-5xl lg:text-6xl text-foreground mb-8">
+
+        <motion.div
+          className="mb-5 inline-flex items-center gap-2 rounded-full border border-gold/30 bg-gold/10 px-4 py-2 font-mono text-[9px] uppercase tracking-[0.24em] text-gold"
+          initial={{ opacity: 0, y: 14 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.6, delay: 0.78 }}
+        >
+          <Sparkles size={13} />
+          Зерттеу сәтті аяқталды
+        </motion.div>
+
+        <motion.h1
+          className="mb-8 font-serif text-5xl text-foreground lg:text-6xl"
+          initial={{ opacity: 0, y: 24 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.75, delay: 0.9, ease: [0.16, 1, 0.3, 1] }}
+        >
           Зерттеу аяқталды
-        </h1>
-        
-        <div className="glass-panel p-10 rounded-3xl mb-12 text-left shadow-2xl">
+        </motion.h1>
+
+        <motion.div
+          className="glass-panel relative mb-10 overflow-hidden rounded-3xl p-10 text-left shadow-2xl"
+          initial={{ opacity: 0, y: 30, scale: 0.97 }}
+          animate={{ opacity: 1, y: 0, scale: 1 }}
+          transition={{ duration: 0.8, delay: 1.08, ease: [0.16, 1, 0.3, 1] }}
+        >
+          <motion.div
+            className="absolute left-0 top-0 h-[3px] bg-gradient-to-r from-transparent via-gold to-transparent"
+            initial={{ width: 0, opacity: 0 }}
+            animate={{ width: '100%', opacity: 1 }}
+            transition={{ duration: 1.1, delay: 1.35, ease: [0.16, 1, 0.3, 1] }}
+          />
           <SectionKicker>Қорытынды</SectionKicker>
           <p className="font-sans text-xl leading-relaxed text-foreground mt-8">
             {item.analysis}
           </p>
-        </div>
-        
-        <PrimaryButton onClick={onHome}>
-          Басқа тақырыпты зерттеу <ArrowRight size={16} />
-        </PrimaryButton>
+        </motion.div>
+
+        <motion.div
+          initial={{ opacity: 0, y: 18 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.6, delay: 1.42 }}
+        >
+          <PrimaryButton onClick={onHome}>
+            Басқа тақырыпты зерттеу <ArrowRight size={16} />
+          </PrimaryButton>
+        </motion.div>
       </main>
     </motion.div>
   );
