@@ -30,3 +30,17 @@ storage_uri = "gcs://replit-rams-assets-sisko/rams/assets/conversation:927a8e71-
 storage_version_token = "1790003639981823"
 content_type = "text/plain"
 source_uri = "file://attached_assets/Pasted-export-interface-ComparisonData-id-number-topicId-strin_1790003443863.txt"
+
+[[outputs]]
+id = "DH-9EojMp_EjNvuENyYRr"
+uri = "file://artifacts/history-comparison-lab/public/audio/completion-seal.ogg"
+type = "audio"
+title = "completion seal"
+description = "Generated sound effect: Short premium completion chime for a historical research app, a subtle ceremonial seal impact followed by three warm bell-like notes and a faint golden shimmer, dignified and …"
+
+[[outputs]]
+id = "UpTip_CEGS6XvepvzOxvM"
+uri = "file://artifacts/history-comparison-lab/public/audio/comparison-reveal.ogg"
+type = "audio"
+title = "comparison reveal"
+description = "Generated sound effect: Very short elegant educational interface reveal sound, a soft wooden tap followed by a delicate muted metal shimmer, inspired by a historical museum exhibit, warm and refined,…"

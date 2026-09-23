@@ -1,6 +1,6 @@
 import React, { useState, useEffect, type ReactNode } from 'react';
 import {
-  ArrowLeft, ArrowRight, BookOpen, Check, ChevronRight, Cpu, History, Home, Layers3, Lightbulb, ListChecks, RotateCcw, SearchCheck, ShieldCheck, ScrollText, Landmark, Feather, Info, Sparkles
+  ArrowLeft, ArrowRight, BookOpen, Check, ChevronRight, Cpu, History, Home, Layers3, Lightbulb, ListChecks, RotateCcw, SearchCheck, ShieldCheck, ScrollText, Landmark, Feather, Info, Sparkles, Volume2, VolumeX
 } from 'lucide-react';
 import { questionsData, topicInfo, type ComparisonData } from './data';
 import { Scene } from './components/3d/Scene';
@@ -56,6 +56,16 @@ const completionParticles = [
   { x: 96, y: -36, delay: 0.24, size: 5 },
   { x: 142, y: 16, delay: 0.38, size: 7 },
 ];
+
+const audioPath = (fileName: string) => `${import.meta.env.BASE_URL}audio/${fileName}`;
+
+function playInterfaceSound(fileName: string, volume: number) {
+  const sound = new Audio(audioPath(fileName));
+  sound.volume = volume;
+  void sound.play().catch(() => {
+    // Browsers may block audio until the user has interacted with the page.
+  });
+}
 
 // --- Subcomponents ---
 
@@ -163,12 +173,16 @@ function TopBar({
   onQuestions,
   onTopics,
   onRestart,
+  soundEnabled,
+  onToggleSound,
 }: {
   step: Step;
   onHome: () => void;
   onQuestions: () => void;
   onTopics: () => void;
   onRestart: () => void;
+  soundEnabled: boolean;
+  onToggleSound: () => void;
 }) {
   const current = Math.max(0, stepOrder.indexOf(step) - 1);
   const total = stepOrder.length - 2; // exclude landing and final from fraction
@@ -226,14 +240,28 @@ function TopBar({
           ))}
         </nav>
 
-        {step !== 'landing' ? (
-          <button onClick={onRestart} className="group ml-auto flex items-center gap-3 rounded-full border border-border bg-background/60 px-3 py-2 text-xs font-medium text-foreground transition-all duration-300 hover:-translate-y-0.5 hover:border-gold/50 hover:bg-foreground hover:text-background hover:shadow-lg sm:px-4">
-            <RotateCcw size={14} className="transition-transform duration-500 group-hover:-rotate-90" />
-            <span className="hidden sm:inline font-sans tracking-wide">Қайта бастау</span>
+        <div className="ml-auto flex items-center gap-2">
+          <button
+            type="button"
+            onClick={onToggleSound}
+            aria-label={soundEnabled ? 'Дыбысты өшіру' : 'Дыбысты қосу'}
+            aria-pressed={soundEnabled}
+            title={soundEnabled ? 'Дыбысты өшіру' : 'Дыбысты қосу'}
+            className={`flex h-10 w-10 items-center justify-center rounded-full border transition-all duration-300 hover:-translate-y-0.5 hover:border-gold/60 hover:shadow-md ${
+              soundEnabled
+                ? 'border-gold/35 bg-gold/10 text-gold'
+                : 'border-border bg-background/60 text-muted-foreground'
+            }`}
+          >
+            {soundEnabled ? <Volume2 size={16} /> : <VolumeX size={16} />}
           </button>
-        ) : (
-          <div className="hidden w-[130px] sm:block" aria-hidden="true" />
-        )}
+          {step !== 'landing' && (
+            <button onClick={onRestart} className="group flex items-center gap-3 rounded-full border border-border bg-background/60 px-3 py-2 text-xs font-medium text-foreground transition-all duration-300 hover:-translate-y-0.5 hover:border-gold/50 hover:bg-foreground hover:text-background hover:shadow-lg sm:px-4">
+              <RotateCcw size={14} className="transition-transform duration-500 group-hover:-rotate-90" />
+              <span className="hidden sm:inline font-sans tracking-wide">Қайта бастау</span>
+            </button>
+          )}
+        </div>
       </div>
       {step !== 'landing' && (
         <div className="absolute inset-x-0 bottom-0 h-[2px] overflow-hidden bg-border/40">
@@ -852,11 +880,20 @@ export default function App() {
   const [step, setStep] = useState<Step>('landing');
   const [topicId, setTopicId] = useState<string>('');
   const [questionId, setQuestionId] = useState<number>(0);
+  const [soundEnabled, setSoundEnabled] = useState(true);
 
   // Scroll to top on step change
   useEffect(() => {
     window.scrollTo(0, 0);
   }, [step]);
+
+  useEffect(() => {
+    ['comparison-reveal.ogg', 'completion-seal.ogg'].forEach((fileName) => {
+      const sound = new Audio(audioPath(fileName));
+      sound.preload = 'auto';
+      sound.load();
+    });
+  }, []);
 
   const activeItem = questionsData.find(q => q.id === questionId) || questionsData[0];
 
@@ -885,6 +922,27 @@ export default function App() {
     setStep('questions');
   };
 
+  const handleToggleSound = () => {
+    if (!soundEnabled) {
+      playInterfaceSound('comparison-reveal.ogg', 0.22);
+    }
+    setSoundEnabled((enabled) => !enabled);
+  };
+
+  const handleOpenComparison = () => {
+    if (soundEnabled) {
+      playInterfaceSound('comparison-reveal.ogg', 0.34);
+    }
+    setStep('comparison');
+  };
+
+  const handleOpenFinal = () => {
+    if (soundEnabled) {
+      playInterfaceSound('completion-seal.ogg', 0.42);
+    }
+    setStep('final');
+  };
+
   return (
     <div className="relative min-h-screen selection:bg-gold selection:text-background">
       {/* Global Textures */}
@@ -897,6 +955,8 @@ export default function App() {
         onQuestions={handleQuestions}
         onTopics={handleTopics}
         onRestart={handleRestart}
+        soundEnabled={soundEnabled}
+        onToggleSound={handleToggleSound}
       />
 
       <AnimatePresence mode="wait">
@@ -905,8 +965,8 @@ export default function App() {
         {step === 'questions' && <Questions key="questions" topicId={topicId} onSelect={(id) => { setQuestionId(id); setStep('intro'); }} onBack={() => setStep('topics')} />}
         {step === 'intro' && <Intro key="intro" item={activeItem} onNext={() => setStep('ai')} onBack={() => setStep('questions')} />}
         {step === 'ai' && <SourceAnswer key="ai" item={activeItem} source="ai" onNext={() => setStep('textbook')} onBack={() => setStep('intro')} />}
-        {step === 'textbook' && <SourceAnswer key="textbook" item={activeItem} source="textbook" onNext={() => setStep('comparison')} onBack={() => setStep('ai')} />}
-        {step === 'comparison' && <Comparison key="comparison" item={activeItem} onNext={() => setStep('final')} onBack={() => setStep('textbook')} />}
+        {step === 'textbook' && <SourceAnswer key="textbook" item={activeItem} source="textbook" onNext={handleOpenComparison} onBack={() => setStep('ai')} />}
+        {step === 'comparison' && <Comparison key="comparison" item={activeItem} onNext={handleOpenFinal} onBack={() => setStep('textbook')} />}
         {step === 'final' && <Final key="final" item={activeItem} onHome={handleRestart} />}
       </AnimatePresence>
     </div>
