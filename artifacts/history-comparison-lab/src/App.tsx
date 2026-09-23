@@ -55,7 +55,7 @@ function LandingOrnament() {
 
   return (
     <div className="absolute inset-0 z-0 flex items-center justify-center overflow-hidden pointer-events-none" aria-hidden="true">
-      <div className="relative w-[98%] max-w-[720px] aspect-square translate-x-[12%] translate-y-[5%]">
+      <div className="relative aspect-square w-[98%] max-w-[720px] translate-x-[8%] translate-y-[3%] 2xl:max-w-[980px] 2xl:translate-x-0">
         <div className="absolute inset-[8%] rounded-full bg-[#4A6D7C]/[0.035] blur-2xl" />
         <svg
           viewBox="0 0 400 400"
@@ -156,7 +156,7 @@ function TopBar({
   
   return (
     <header className="fixed top-0 left-0 right-0 z-40 border-b border-gold/25 bg-background/95 shadow-[0_16px_45px_-30px_rgba(72,51,25,0.65)] backdrop-blur-xl">
-      <div className="mx-auto grid max-w-[1400px] grid-cols-[1fr_auto_1fr] items-center gap-5 px-4 py-3 sm:px-6">
+      <div className="mx-auto grid w-[min(94vw,2200px)] grid-cols-[1fr_auto_1fr] items-center gap-5 px-4 py-3 sm:px-6">
         <Brand onClick={onHome} />
 
         <nav
@@ -242,21 +242,21 @@ function Landing({ onBegin }: { onBegin: () => void }) {
       <div className="absolute inset-0 z-0 bg-background overflow-hidden pointer-events-none">
       </div>
 
-      <div className="flex-1 relative z-10 w-full flex flex-col lg:flex-row max-w-[1600px] mx-auto">
+      <div className="relative z-10 mx-auto flex w-[min(94vw,2200px)] flex-1 flex-col lg:flex-row">
 
         {/* Left Side: Content */}
-        <div className="w-full lg:w-1/2 flex flex-col justify-start px-6 sm:px-12 lg:pl-20 lg:pr-4 xl:pl-24 xl:pr-6 py-4 lg:pt-6 xl:pt-10 order-1 text-center lg:text-left z-20 pb-6">
-          <div className="max-w-2xl mx-auto lg:mx-0">
+        <div className="order-1 z-20 flex w-full flex-col justify-start px-6 py-4 pb-6 text-center sm:px-12 lg:w-[48%] lg:pl-12 lg:pr-4 lg:pt-6 lg:text-left xl:pl-16 xl:pr-6 xl:pt-10 2xl:pl-10 2xl:pt-14">
+          <div className="mx-auto max-w-2xl lg:mx-0 2xl:max-w-3xl">
              <span className="inline-block font-mono text-[10px] sm:text-xs uppercase tracking-[.3em] text-[#4A6D7C] mb-4 sm:mb-5 px-4 py-2 rounded-full border border-[#4A6D7C]/30 bg-[#4A6D7C]/5 backdrop-blur-sm">
                Зерттеу зертханасы
              </span>
              
-             <h1 className="font-display font-semibold uppercase text-5xl sm:text-6xl lg:text-6xl xl:text-7xl leading-[0.92] tracking-[0.015em] text-foreground mb-5">
+             <h1 className="mb-5 font-display text-5xl font-semibold uppercase leading-[0.92] tracking-[0.015em] text-foreground sm:text-6xl lg:text-6xl xl:text-7xl 2xl:text-8xl">
                Шындық пен <br />
                <span className="text-[#4A6D7C]">ЖИ</span>
              </h1>
              
-             <p className="font-sans text-base sm:text-lg lg:text-base xl:text-lg leading-relaxed text-muted-foreground mb-6 border-l-0 lg:border-l-2 border-[#4A6D7C]/30 lg:pl-6">
+             <p className="mb-6 border-l-0 border-[#4A6D7C]/30 font-sans text-base leading-relaxed text-muted-foreground sm:text-lg lg:border-l-2 lg:pl-6 lg:text-base xl:text-lg 2xl:text-xl 2xl:leading-[1.8]">
                Қазақстан тарихын екі дереккөз арқылы тереңірек зертте. ЖИ ұсынған түсіндірмені оқулықтағы нақты деректермен салыстыр. Оқиғалардың себептері мен салдарын талдап, ұқсастықтарды анықта, айырмашылықтарды байқап, өз қорытындыңды жаса.
              </p>
              
@@ -269,7 +269,7 @@ function Landing({ onBegin }: { onBegin: () => void }) {
         </div>
 
         {/* Right Side: Robot */}
-        <div className="w-full lg:w-1/2 h-[42vh] min-h-[320px] lg:h-[calc(100vh-89px)] relative group order-2 pb-4 lg:pb-0 lg:-translate-x-16 xl:-translate-x-20">
+        <div className="group relative order-2 h-[42vh] min-h-[320px] w-full pb-4 lg:h-[calc(100vh-89px)] lg:w-[52%] lg:-translate-x-6 lg:pb-0 xl:-translate-x-10 2xl:translate-x-0">
           <LandingOrnament />
           <Scene 
             id="landing-ai"
@@ -287,12 +287,12 @@ function Landing({ onBegin }: { onBegin: () => void }) {
 
 function Topics({ onSelect }: { onSelect: (id: string) => void }) {
   return (
-    <motion.div variants={pageVariants} initial="initial" animate="animate" exit="exit" className="min-h-screen pt-[160px] pb-24 px-6">
-      <main className="mx-auto max-w-[1200px]">
-        <div className="flex flex-col lg:flex-row justify-between items-end gap-8 mb-20">
-          <div className="max-w-2xl">
+    <motion.div variants={pageVariants} initial="initial" animate="animate" exit="exit" className="flex min-h-screen items-center px-6 pb-20 pt-[130px] 2xl:px-10">
+      <main className="mx-auto w-full max-w-[1200px] 2xl:max-w-[1760px]">
+        <div className="mb-14 flex flex-col items-end justify-between gap-8 lg:flex-row 2xl:mb-16">
+          <div className="max-w-2xl 2xl:max-w-4xl">
             <SectionKicker>Тарихи тақырыптар</SectionKicker>
-            <h1 className="font-serif text-5xl lg:text-6xl text-foreground">
+            <h1 className="font-serif text-5xl text-foreground lg:text-6xl 2xl:text-7xl">
               Қай кезеңнің <span className="italic text-gold">ізін зерттейміз?</span>
             </h1>
           </div>
@@ -310,13 +310,13 @@ function Topics({ onSelect }: { onSelect: (id: string) => void }) {
             <button 
               key={topic.id} 
               onClick={() => onSelect(topic.id)} 
-              className="group flex flex-col sm:flex-row sm:items-center justify-between p-8 border-b border-border hover:bg-foreground/5 transition-colors text-left"
+              className="group flex flex-col justify-between border-b border-border p-8 text-left transition-colors hover:bg-foreground/5 sm:flex-row sm:items-center 2xl:px-10 2xl:py-9"
             >
               <div className="flex items-center gap-12">
                 <span className="font-serif text-4xl text-gold opacity-50 group-hover:opacity-100 transition-opacity w-16">{topic.mark}</span>
                 <div>
-                  <h2 className="font-serif text-3xl text-foreground mb-2">{topic.title}</h2>
-                  <p className="font-sans text-sm text-muted-foreground">{topic.note}</p>
+                  <h2 className="mb-2 font-serif text-3xl text-foreground 2xl:text-4xl">{topic.title}</h2>
+                  <p className="font-sans text-sm text-muted-foreground 2xl:text-base">{topic.note}</p>
                 </div>
               </div>
               <div className="flex items-center gap-8 mt-6 sm:mt-0">
@@ -341,7 +341,7 @@ function Questions({ topicId, onSelect, onBack }: { topicId: string; onSelect: (
 
   return (
     <motion.div variants={pageVariants} initial="initial" animate="animate" exit="exit" className="min-h-screen pt-[160px] pb-24 px-6 flex items-center">
-      <main className="mx-auto max-w-[1400px] w-full grid md:grid-cols-2 gap-10 lg:gap-20 items-start">
+      <main className="mx-auto grid w-full max-w-[1400px] items-start gap-10 md:grid-cols-2 lg:gap-20 2xl:max-w-[1900px] 2xl:gap-28">
         <div>
           <button onClick={onBack} className="font-mono text-[10px] uppercase tracking-widest text-muted-foreground hover:text-foreground transition-colors flex items-center gap-3 mb-16">
             <ArrowLeft size={14} /> Тақырыптарға оралу
@@ -379,7 +379,7 @@ function Questions({ topicId, onSelect, onBack }: { topicId: string; onSelect: (
 function Intro({ item, onNext, onBack }: { item: ComparisonData; onNext: () => void; onBack: () => void }) {
   return (
     <motion.div variants={pageVariants} initial="initial" animate="animate" exit="exit" className="min-h-screen pt-[160px] pb-24 px-6 flex items-center">
-      <main className="mx-auto max-w-[1400px] w-full grid lg:grid-cols-2 gap-20 items-center">
+      <main className="mx-auto grid w-full max-w-[1400px] items-center gap-20 lg:grid-cols-2 2xl:max-w-[1840px] 2xl:gap-28">
         <div>
           <button onClick={onBack} className="font-mono text-[10px] uppercase tracking-widest text-muted-foreground hover:text-foreground transition-colors flex items-center gap-3 mb-16">
             <ArrowLeft size={14} /> Сұрақтарға оралу
@@ -421,7 +421,7 @@ function SourceAnswer({ item, source, onNext, onBack }: { item: ComparisonData; 
   
   return (
     <motion.div variants={pageVariants} initial="initial" animate="animate" exit="exit" className="min-h-screen pt-[160px] pb-24 px-6 flex flex-col">
-      <main className="mx-auto max-w-[1400px] w-full flex-1 flex flex-col">
+      <main className="mx-auto flex w-full max-w-[1400px] flex-1 flex-col 2xl:max-w-[1840px]">
         <button onClick={onBack} className="font-mono text-[10px] uppercase tracking-widest text-muted-foreground hover:text-foreground transition-colors flex items-center gap-3 mb-12 self-start">
           <ArrowLeft size={14} /> Сұраққа оралу
         </button>
@@ -515,7 +515,7 @@ function SourceAnswer({ item, source, onNext, onBack }: { item: ComparisonData; 
 function Comparison({ item, onNext, onBack }: { item: ComparisonData; onNext: () => void; onBack: () => void }) {
   return (
     <motion.div variants={pageVariants} initial="initial" animate="animate" exit="exit" className="min-h-screen pt-[160px] pb-24 px-6">
-      <main className="mx-auto max-w-[1400px]">
+      <main className="mx-auto w-full max-w-[1400px] 2xl:max-w-[1840px]">
         <button onClick={onBack} className="font-mono text-[10px] uppercase tracking-widest text-muted-foreground hover:text-foreground transition-colors flex items-center gap-3 mb-12">
           <ArrowLeft size={14} /> Алдыңғы қадам
         </button>
