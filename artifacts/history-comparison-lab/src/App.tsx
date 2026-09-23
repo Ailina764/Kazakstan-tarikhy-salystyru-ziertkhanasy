@@ -4,7 +4,7 @@ import {
 } from 'lucide-react';
 import { questionsData, topicInfo, type ComparisonData } from './data';
 import { Scene } from './components/3d/Scene';
-import { motion, AnimatePresence, type Variants } from 'framer-motion';
+import { animate, motion, AnimatePresence, useMotionValue, useTransform, type Variants } from 'framer-motion';
 
 type Step = 'landing' | 'topics' | 'questions' | 'intro' | 'ai' | 'textbook' | 'comparison' | 'final';
 
@@ -259,6 +259,28 @@ function SectionKicker({ children }: { children: ReactNode }) {
       <span className="h-[1px] w-12 bg-gold" />
       <span className="font-mono text-[10px] uppercase tracking-[.3em] text-muted-foreground">{children}</span>
     </div>
+  );
+}
+
+function AnimatedPercentage({ value }: { value: number }) {
+  const count = useMotionValue(0);
+  const rounded = useTransform(count, (latest) => Math.round(latest));
+
+  useEffect(() => {
+    count.set(0);
+    const controls = animate(count, value, {
+      duration: 1.8,
+      ease: [0.16, 1, 0.3, 1],
+    });
+
+    return () => controls.stop();
+  }, [count, value]);
+
+  return (
+    <span className="flex items-baseline">
+      <motion.span>{rounded}</motion.span>
+      <span className="ml-1 text-[0.48em] opacity-70">%</span>
+    </span>
   );
 }
 
@@ -571,8 +593,71 @@ function Comparison({ item, onNext, onBack }: { item: ComparisonData; onNext: ()
           </p>
         </div>
 
+        {/* Key comparison signals overlap the answer panels so they remain prominent. */}
+        <motion.div
+          className="relative z-20 mx-auto mb-6 grid w-[94%] gap-4 md:mb-[-82px] md:grid-cols-3"
+          initial={{ opacity: 0, y: 24 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.7, delay: 0.35, ease: [0.16, 1, 0.3, 1] }}
+        >
+          <div className="overflow-hidden rounded-3xl border border-[#4A6D7C]/35 bg-background/95 p-6 shadow-[0_20px_50px_-28px_rgba(31,55,65,0.75)] backdrop-blur-xl lg:p-7">
+            <div className="mb-5 flex items-start justify-between gap-4">
+              <div>
+                <p className="font-mono text-[9px] uppercase tracking-[0.24em] text-[#4A6D7C]">Деректер сәйкестігі</p>
+                <p className="mt-2 font-serif text-xl font-bold text-foreground">Сәйкестік</p>
+              </div>
+              <div className="font-display text-5xl font-semibold leading-none text-[#4A6D7C] lg:text-6xl">
+                <AnimatedPercentage value={item.similarityPercentage} />
+              </div>
+            </div>
+            <div className="h-2 overflow-hidden rounded-full bg-[#4A6D7C]/12">
+              <motion.div
+                className="h-full rounded-full bg-[#4A6D7C]"
+                initial={{ width: 0 }}
+                animate={{ width: `${item.similarityPercentage}%` }}
+                transition={{ duration: 1.8, delay: 0.35, ease: [0.16, 1, 0.3, 1] }}
+              />
+            </div>
+          </div>
+
+          <div className="overflow-hidden rounded-3xl border border-[#8C3A2B]/35 bg-background/95 p-6 shadow-[0_20px_50px_-28px_rgba(105,43,34,0.72)] backdrop-blur-xl lg:p-7">
+            <div className="mb-5 flex items-start justify-between gap-4">
+              <div>
+                <p className="font-mono text-[9px] uppercase tracking-[0.24em] text-[#8C3A2B]">Тексеруді қажет етеді</p>
+                <p className="mt-2 font-serif text-xl font-bold text-foreground">Айырмашылық</p>
+              </div>
+              <div className="font-display text-5xl font-semibold leading-none text-[#8C3A2B] lg:text-6xl">
+                <AnimatedPercentage value={item.differencePercentage} />
+              </div>
+            </div>
+            <div className="h-2 overflow-hidden rounded-full bg-[#8C3A2B]/12">
+              <motion.div
+                className="h-full rounded-full bg-[#8C3A2B]"
+                initial={{ width: 0 }}
+                animate={{ width: `${item.differencePercentage}%` }}
+                transition={{ duration: 1.8, delay: 0.35, ease: [0.16, 1, 0.3, 1] }}
+              />
+            </div>
+          </div>
+
+          <div className="rounded-3xl border border-gold/45 bg-[linear-gradient(135deg,rgba(207,160,82,0.2),rgba(236,232,221,0.96))] p-6 shadow-[0_20px_50px_-28px_rgba(122,87,34,0.8)] backdrop-blur-xl lg:p-7">
+            <div className="mb-4 flex items-center gap-3">
+              <div className="flex h-11 w-11 items-center justify-center rounded-full bg-gold text-background shadow-md">
+                <Info size={20} />
+              </div>
+              <div>
+                <p className="font-mono text-[9px] uppercase tracking-[0.24em] text-gold">Маңызды белгі</p>
+                <p className="mt-1 font-serif text-xl font-bold text-foreground">Назар аудар</p>
+              </div>
+            </div>
+            <p className="font-sans text-sm leading-relaxed text-foreground/80">
+              {item.pointsToCheck.join(' ')}
+            </p>
+          </div>
+        </motion.div>
+
         {/* Split View */}
-        <div className="grid lg:grid-cols-2 gap-8 mb-12 relative">
+        <div className="relative mb-12 grid gap-8 pt-0 md:pt-16 lg:grid-cols-2">
            <div className="absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 z-10 hidden lg:flex w-16 h-16 rounded-full bg-background border border-border items-center justify-center shadow-xl">
              <RotateCcw size={20} className="text-gold transform rotate-45" />
            </div>
@@ -613,39 +698,6 @@ function Comparison({ item, onNext, onBack }: { item: ComparisonData; onNext: ()
                  </li>
                ))}
              </ul>
-           </div>
-        </div>
-
-        {/* Stats & Analysis */}
-        <div className="grid lg:grid-cols-3 gap-8 mb-12">
-           <div className="glass-panel p-8 rounded-3xl flex items-center gap-6">
-              <div className="w-20 h-20 rounded-full border-4 border-[#4A6D7C] flex items-center justify-center font-serif text-2xl font-bold text-foreground">
-                {item.similarityPercentage}%
-              </div>
-              <div>
-                 <p className="font-serif text-xl font-bold mb-2">Сәйкестік</p>
-                 <p className="font-sans text-xs text-muted-foreground leading-relaxed">Екі дереккөздегі негізгі ақпарат бір-біріне сәйкес келеді.</p>
-              </div>
-           </div>
-           
-           <div className="glass-panel p-8 rounded-3xl flex items-center gap-6">
-              <div className="w-20 h-20 rounded-full border-4 border-gold flex items-center justify-center font-serif text-2xl font-bold text-foreground">
-                {item.differencePercentage}%
-              </div>
-              <div>
-                 <p className="font-serif text-xl font-bold mb-2">Айырмашылық</p>
-                 <p className="font-sans text-xs text-muted-foreground leading-relaxed">Кейбір мәліметтерде айырмашылықтар бар.</p>
-              </div>
-           </div>
-
-           <div className="glass-panel p-8 rounded-3xl col-span-1 lg:col-span-1 flex flex-col justify-center">
-              <p className="font-serif text-xl font-bold mb-4 flex items-center gap-3">
-                <Info className="text-gold" size={20} />
-                Назар аудар
-              </p>
-              <p className="font-sans text-sm text-foreground/80 leading-relaxed">
-                {item.pointsToCheck.join(' ')}
-              </p>
            </div>
         </div>
 
